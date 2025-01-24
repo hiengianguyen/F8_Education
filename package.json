@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src\\index.js",
   "scripts": {
-    "beutify":"lint-staged",
+    "beutify": "lint-staged",
     "start": "nodemon --inspect src\\index.js",
     "watch": "node-sass -w src/resources/scss/ -o src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,10 +16,12 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "express-handlebars": "^8.0.1"
+    "express-handlebars": "^8.0.1",
+    "mongoose": "^8.9.5",
+    "mongoose-slug-generator": "^1.0.4"
   },
   "lint-staged": {
-    "src\\**\\*.{js,json,scss}": "prettier --single-quote --tab-width 4 --trailing-comma all --write"
+    "src/**/*.{js,json,scss}": "prettier --single-quote --tab-width 4 --trailing-comma all --write"
   },
   "devDependencies": {
     "husky": "^9.1.7",
@@ -34,7 +36,4 @@
       "pre-commit": "lint-staged"
     }
   }
-  
-
-  
 }
