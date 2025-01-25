@@ -25,11 +25,11 @@ class CourseController {
   edit(req, res, next) {
     Course.findById(req.params.id)
       .then((course) => {
-        res.render("courses/edit"),
+        res.render("courses/edit",
           {
             course: mongooseToObject(course),
-          };
-      })
+          }
+      )})
       .catch(next);
   }
 }
