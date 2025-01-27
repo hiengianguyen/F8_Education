@@ -32,6 +32,11 @@ class CourseController {
       )})
       .catch(next);
   }
+  update(req, res) {
+    Course.updateOne({ _id: req.params.id }, req.body)
+      .then(() => res.redirect("/me/stored/courses"))
+      .catch((err) => next(err));
+  }
 }
 
 module.exports = new CourseController();
