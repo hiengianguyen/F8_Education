@@ -37,7 +37,7 @@ class CourseController {
       .catch((err) => next(err));
   }
   destroy(req, res, next) {
-    Course.delete({ _id: req.params.id })
+    Course.deleteOne({ _id: req.params.id })
       .then(() => res.redirect("back"))
       .catch(next);
   }
