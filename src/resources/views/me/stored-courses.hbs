@@ -57,11 +57,11 @@ if (exampleModal) {
     const button = event.relatedTarget
     courseId = button.getAttribute('data-bs-id');
     const btnDestroyCourse = document.getElementById("btn-destroy-course")
-    
+    const deleteForm = document.getElementById("form-hid-detete")
     btnDestroyCourse.onclick = () => {
         const formDelete = document.getElementById("form-hid-detete")
-        console.log(formDelete)
-    }
+        deleteForm.action = "/course/" + courseId + "?_method=DELETE";
+        deleteForm.submit();   }
    
   })
 }
