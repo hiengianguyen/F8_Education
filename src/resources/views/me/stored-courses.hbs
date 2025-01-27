@@ -20,7 +20,7 @@
                 <td>{{this.slug}}</td>
                 <td>
                     <a href="/course/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
-                    <a href="/course/{{this._id}}/delete" class="btn btn-danger">Xóa</a>
+                    <a href="/course/{{this._id}}/delete" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa</a>
                 </td>
                 
                     
@@ -30,3 +30,40 @@
         </table>
         </div>
 </div>
+
+<div id="delete-course-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog mt-5">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you want to delete this course.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-destroy-course" type="button" class="btn btn-danger">Destroy</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <form id="form-hid-detete" method="POST">
+<script>
+const exampleModal = document.getElementById('delete-course-modal')
+if (exampleModal) {
+    var courseId;
+  exampleModal.addEventListener('show.bs.modal', function(event) {
+    const button = event.relatedTarget
+    courseId = button.getAttribute('data-bs-id');
+    const btnDestroyCourse = document.getElementById("btn-destroy-course")
+    
+    btnDestroyCourse.onclick = () => {
+        const formDelete = document.getElementById("form-hid-detete")
+        console.log(formDelete)
+    }
+   
+  })
+}
+
+</script>
