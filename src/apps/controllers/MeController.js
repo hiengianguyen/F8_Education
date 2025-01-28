@@ -7,7 +7,7 @@ const {
 class MeController {
   // [GET] /me/stored/courses
   storedCourses(req, res, next) {
-    Course.find({})
+    Course.find({ deleted: false })
       .then((courses) => {
         res.render("me/stored-courses", {
           courses: multipleMongooseToObject(courses),
@@ -24,7 +24,6 @@ class MeController {
         });
       })
       .catch(next);
-      
   }
 }
 
