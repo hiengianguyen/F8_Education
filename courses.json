@@ -3,14 +3,14 @@
     "name": "HTML CSS từ Zero đến Hero",
     "description": "Phát triển giao diện web với HTML & CSS",
     "videoId": "2nXupDp91Z4",
-    "slug": "html-cs",
+    "slug": "html-css",
     "image": "https://files.fullstack.edu.vn/f8-prod/courses/2.png"
   },
   {
-    "name": "ập trình C++ cơ bản, nâng cao",
-    "description": "Cùng học CC++",
+    "name": "Lập Trình JavaScript Cơ Bản",
+    "description": "Cùng học C++",
     "videoId": "2nXupDp91Z4",
-    "slug": "c++",
+    "slug": "cpp",
     "image": "https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png"
   },
   {
@@ -38,7 +38,7 @@
     "name": "Xây Dựng Website với ReactJS",
     "description": "Phát triển web với reactjs",
     "videoId": "2nXupDp91Z4",
-    "slug": "react",
+    "slug": "reactjs",
     "image": "https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
   }
 ]
