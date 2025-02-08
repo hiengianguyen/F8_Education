@@ -22,7 +22,7 @@
                 <td>{{this.videoId}}</td>
                 <td>{{this.slug}}</td>
                 <td class="option-btn text-center">
-                    <a href="/me/trash/courses" class="btn btn-primary btn-restore" data-id="{{this._id}}">Khôi Phục</a>
+                    <a href="/me/trash/courses" class="btn btn-primary btn-restore {{this.slug}}" data-id="{{this._id}}">Khôi Phục</a>
                     <a href="" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa Vĩnh Viễn</a>
                 </td>  
             </tr>
@@ -67,10 +67,10 @@ var btnRestores = document.querySelectorAll('.btn-restore');
 btnRestores.forEach(btnRestore => {
   btnRestore.onclick = (e) => {
       e.preventDefault();
-      var courseId = e.target.getAttribute('data-id');
-      restoreForm.action = "/course/" + courseId + "/restore?_method=PATCH";
+      var courseIdrestore = e.target.getAttribute('data-id');
+      restoreForm.action = "/course/" + courseIdrestore + "/restore?_method=PATCH";
       restoreForm.submit();
+
   }
 })
-
 </script>
