@@ -5,6 +5,7 @@
     "videoId": "2nXupDp91Z4",
     "slug": "html-css",
     "image": "https://files.fullstack.edu.vn/f8-prod/courses/2.png",
+
     "deleted": "false"
   },
   {
@@ -20,8 +21,11 @@
     "description": "Phát triển phần mềm với Nodejs",
     "videoId": "2nXupDp91Z4",
     "slug": "nodejs",
+
     "image": "https://files.fullstack.edu.vn/f8-prod/courses/6.png",
     "deleted": "false"
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5e5LGGnHPa9aIPrtpPSxAATIYfXSiCipK_A&s",
+   
   },
   {
     "name": "Lập Trình JavaScript Cơ Bản",
@@ -44,6 +48,7 @@
     "description": "Phát triển web với reactjs",
     "videoId": "2nXupDp91Z4",
     "slug": "reactjs",
-    "image": "https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
+    "image": "https://files.fullstack.edu.vn/f8-prod/courses/13/13.png",
+    "deleted": false
   }
 ]

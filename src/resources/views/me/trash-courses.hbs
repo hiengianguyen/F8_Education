@@ -59,22 +59,9 @@
   <form id="restore-form" method="POST">
 
 <script>
-var exampleModal = document.getElementById('delete-course-modal')
 var restoreForm = document.querySelector("#restore-form");
- 
-  var courseId;
-  var deleteForm = document.getElementById("form-hid-detete")
   
-  exampleModal.addEventListener('show.bs.modal', function(event) {
-  var button = event.relatedTarget
-  var btnDestroyCourse = document.getElementById("btn-destroy-course")
-  courseId = button.getAttribute('data-bs-id');
-  btnDestroyCourse.onclick = () => {
-      const formDelete = document.getElementById("form-hid-detete")
-      deleteForm.action = "/course/" + courseId + "?_method=DELETE";
-      deleteForm.submit();   }
 
-})
 
 var btnRestores = document.querySelectorAll('.btn-restore');
 btnRestores.forEach(btnRestore => {
