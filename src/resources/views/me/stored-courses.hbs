@@ -1,7 +1,7 @@
 <div class="m-4">
   <div >
-    <h3>Khóa học của tôi</h3>
-    <a href="/me/trash/courses">Thùng Rác</a>
+    <h3>Khóa học của tôi </h3>
+    <a href="/me/trash/courses">Thùng Rác  ({{deleteCount}})</a>
     </div>
     <div class="row">
         <div class="col-12">
@@ -10,8 +10,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên khóa học</th>
-                <th scope="col">VideoId</th>
-                <th scope="col" colspan="2">Slug</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col" colspan="2">Cập nhật lúc</th>
             </tr>
             </thead>
             <tbody>
@@ -19,8 +19,8 @@
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
-                <td>{{this.videoId}}</td>
-                <td>{{this.slug}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.updatedAt}}</td>
                 <td>
                     <a href="/course/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
                     <a href="/course/{{this._id}}/delete" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa</a>
