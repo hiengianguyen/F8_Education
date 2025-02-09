@@ -1,25 +1,25 @@
-<div class="m-4">
-  <div >
-    <h3>Khóa học của tôi </h3>
-    <a href="/me/trash/courses">Thùng Rác  ({{deleteCount}})</a>
+<form class="m-4" name="container-form" method="POST" action="/courses/handle-method-course">
+    <div class="d-flex justify-content-between title-store">
+      <h3>Khóa học của tôi</h3>
+      <a href="/me/trash/courses" class="ml-auto fs-5 text-decoration-none">Thùng Rác ({{deleteCount}})</a>
     </div>
-    <div class="mt-2 d-inline-flex checkbox-all-course">
+    <div class="mt-2 d-flex checkbox-all-course justify-content-center">
       <div class="mt-16 form-check">
         <input type="checkbox" class="form-check-input" id="checkbox-all">
         <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
       </div>
-      <select class="form-select mb-2 select-method-course" aria-label="Default select example">
-          <option selected>-- Phương thức --</option>
-          <option value="DeleteDelete">xóa</option>
+      <select class="form-select mb-2 select-method-course" aria-label="Default select example" name="action" required>
+          <option selected value="">-- Phương thức --</option>
+          <option value="delete">xóa</option>
       </select>
-      <button type="submit" class="btn btn-primary" disabled>Thực hiện</button>
+      <button type="submit" class="btn btn-primary btn-sumbit-method" disabled>Thực hiện</button>
       </div>
-    <div class="row">
+    <form class="row">
         <div class="col-12">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" colspan="2">#</th>
                 <th scope="col">Tên khóa học</th>
                 <th scope="col">Mô tả</th>
                 <th scope="col" colspan="2">Cập nhật lúc</th>
@@ -46,14 +46,14 @@
             {{else}}
               <tr class="text-center">  
                 <td colspan="4">There are no courses
-                  <a href="/course/create">Create Course</a>
+                  <a href="/courses/create">Create Course</a>
                   </td>
               </tr>
             {{/each}}
             </tbody>
         </table>
         </div>
-</div>
+</form>
 
 <div id="delete-course-modal" class="modal" tabindex="-1">
   <div class="modal-dialog mt-5">
@@ -87,23 +87,44 @@ if (exampleModal) {
     const deleteForm = document.getElementById("form-hid-detete")
     btnDestroyCourse.onclick = () => {
         const formDelete = document.getElementById("form-hid-detete")
-        deleteForm.action = "/course/" + courseId + "?_method=DELETE";
+        deleteForm.action = "/courses/" + courseId + "?_method=DELETE";
         deleteForm.submit();   }
    
   })
 
   var checkboxAll = $("#checkbox-all")
   var courseItemcheckbox = $("input[name='courseIds[]']")
-  
+  var submitMethodBtn = $(".btn-sumbit-method")
+  var formContainer = document.forms["container-form"]
 
   checkboxAll.change(function() {
     var isChecked = $(this).prop('checked')
     courseItemcheckbox.prop('checked', isChecked)
+    checkSelectedCourse()
   })
 
   courseItemcheckbox.change(function() {
     var isAllChecked = courseItemcheckbox.length === courseItemcheckbox.filter(':checked').length
     checkboxAll.prop('checked', isAllChecked)
+    checkSelectedCourse()
+  })
+
+  function checkSelectedCourse() {
+    var selectedCourseCount = $("input[name='courseIds[]']:checked").length
+    if (selectedCourseCount) {
+      submitMethodBtn.removeAttr("disabled")
+    } else {
+      submitMethodBtn.attr("disabled", "disabled")
+    }
+  }
+
+
+  submitMethodBtn.on("submit", function(e) {
+    var isSubmitable = !$(this).hasClass("disabled")
+
+    if(!isSubmitable) {
+     e.preventDefault();
+    }
   })
 }
 
