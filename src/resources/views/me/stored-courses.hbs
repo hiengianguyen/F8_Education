@@ -3,6 +3,17 @@
     <h3>Khóa học của tôi </h3>
     <a href="/me/trash/courses">Thùng Rác  ({{deleteCount}})</a>
     </div>
+    <div class="mt-2 d-inline-flex checkbox-all-course">
+      <div class="mt-16 form-check">
+        <input type="checkbox" class="form-check-input" id="checkbox-all">
+        <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
+      </div>
+      <select class="form-select mb-2 select-method-course" aria-label="Default select example">
+          <option selected>-- Phương thức --</option>
+          <option value="DeleteDelete">xóa</option>
+      </select>
+      <button type="submit" class="btn btn-primary" disabled>Thực hiện</button>
+      </div>
     <div class="row">
         <div class="col-12">
         <table class="table">
@@ -17,6 +28,11 @@
             <tbody>
             {{#each courses}}
             <tr>
+                <td>
+                  <div class="mt-16 form-check">
+                    <input type="checkbox" class="form-check-input" name="courseIds[]" value="{{this._id}}">
+                  </div>
+                </td>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.description}}</td>
@@ -59,6 +75,9 @@
   <form id="form-hid-detete" method="POST">
 <script>
 const exampleModal = document.getElementById('delete-course-modal')
+
+
+
 if (exampleModal) {
     var courseId;
   exampleModal.addEventListener('show.bs.modal', function(event) {
@@ -71,6 +90,20 @@ if (exampleModal) {
         deleteForm.action = "/course/" + courseId + "?_method=DELETE";
         deleteForm.submit();   }
    
+  })
+
+  var checkboxAll = $("#checkbox-all")
+  var courseItemcheckbox = $("input[name='courseIds[]']")
+  
+
+  checkboxAll.change(function() {
+    var isChecked = $(this).prop('checked')
+    courseItemcheckbox.prop('checked', isChecked)
+  })
+
+  courseItemcheckbox.change(function() {
+    var isAllChecked = courseItemcheckbox.length === courseItemcheckbox.filter(':checked').length
+    checkboxAll.prop('checked', isAllChecked)
   })
 }
 
