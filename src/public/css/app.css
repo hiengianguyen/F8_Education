@@ -9,3 +9,10 @@
 
 .containers {
   text-align: center; }
+
+.select-method-course {
+  width: 175px;
+  margin: 0 10px; }
+
+.checkbox-all-course {
+  align-items: center; }
