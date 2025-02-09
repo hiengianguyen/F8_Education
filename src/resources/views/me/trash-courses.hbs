@@ -1,7 +1,7 @@
 <div class="m-4">
-  <div >
-    <h3>Khóa học đã xoá</h3>
-    <a href="/me/stored/courses">Danh Sách Khoá Học</a>
+    <div class="d-flex justify-content-between title-store">
+      <h3>Khóa học đã xoá</h3>
+      <a href="/me/stored/courses" class="ml-auto fs-5 text-decoration-none">Danh Sách Khoá Học</a>
     </div>
     <div class="row">
         <div class="col-12">
@@ -30,7 +30,7 @@
             {{else}}
               <tr class="text-center">  
                 <td colspan="4">There are no courses
-                  <a href="/course/create">Create Course</a>
+                  <a href="/courses/create">Create Course</a>
                   </td>
               </tr>
             {{/each}}
@@ -68,7 +68,7 @@ btnRestores.forEach(btnRestore => {
   btnRestore.onclick = (e) => {
       e.preventDefault();
       var courseIdrestore = e.target.getAttribute('data-id');
-      restoreForm.action = "/course/" + courseIdrestore + "/restore?_method=PATCH";
+      restoreForm.action = "/courses/" + courseIdrestore + "/restore?_method=PATCH";
       restoreForm.submit();
 
   }
