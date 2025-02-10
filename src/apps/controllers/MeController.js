@@ -9,17 +9,11 @@ class MeController {
   // [GET] /me/stored/courses
   storedCourses(req, res, next) {
 
-    let courseQuery = Course.find({});
-
-    if(req.query.hasOwnProperty('_sort')) {
-      courseQuery = courseQuery.sort({
-        [req.query.column]: req.query.type
-      });
-    } 
-
     
-
-    Promise.all([courseQuery, Course.countDocumentsDeleted({})])
+    Promise.all([
+      Course.find({}).sortable(req), 
+      Course.countDocumentsDeleted({})
+    ])
       .then(([courses, deleteCount]) => {
         res.render("me/stored-courses", {
           deleteCount,
