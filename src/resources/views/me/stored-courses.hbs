@@ -42,14 +42,14 @@
                 <td>{{this.description}}</td>
                 <td>{{this.updatedAt}}</td>
                 <td>
-                    <a href="/course/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
-                    <a href="/course/{{this._id}}/delete" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa</a>
+                    <a href="/courses/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                    <a href="/courses/{{this._id}}/delete" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa</a>
                 </td>  
             </tr>
 
             {{else}}
               <tr class="text-center">  
-                <td colspan="4">There are no courses
+                <td colspan="5">There are no courses
                   <a href="/courses/create">Create Course</a>
                   </td>
               </tr>
