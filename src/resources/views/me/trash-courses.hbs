@@ -10,8 +10,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên khóa học</th>
-                <th scope="col">VideoId</th>
-                <th scope="col" colspan="2">Slug</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col" colspan="2">Cập nhật lúc</th>
             </tr>
             </thead>
             <tbody>
@@ -19,8 +19,8 @@
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
-                <td>{{this.videoId}}</td>
-                <td>{{this.slug}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.updatedAt}}</td>
                 <td class="option-btn text-center">
                     <a href="/me/trash/courses" class="btn btn-primary btn-restore {{this.slug}}" data-id="{{this._id}}">Khôi Phục</a>
                     <a href="" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa Vĩnh Viễn</a>
