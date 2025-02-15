@@ -1,9 +1,23 @@
 <div class="mt-4 container">
     <form method="GET">
   <div class="mb-3">
-    <label for="search-input" class="form-label">Từ Khoá</label>
-    <input type="text" name='q' class="form-control" id="search-input">
+    <label for="search-input" class="form-label">Từ Khoá (ghi rõ ngôn ngữ lập trình)</label>
+    <input type="text" name='keyword' class="form-control" id="search-input" value="{{inputValue}}" placeholder="Nhập tên khoá học cần tìm kiếm">
   </div>
   <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
 </form>
+
+  <div class="row ms-2">
+    {{#each courses}}
+      <div class="card me-2 mt-2" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text mb-4">{{this.description}}</p>
+          <a href="courses/{{this.slug}}" class="btn btn-primary">Đi tới khoá học</a>
+        </div>
+      </div>
+      {{else}}
+      <h3>Không tìm thấy khóa học nào</h3>
+    {{/each}}
+  </div>
 </div>

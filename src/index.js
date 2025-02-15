@@ -8,6 +8,7 @@ const port = 3001;
 const route = require("./routes");
 const db = require("./config/db");
 const SortMiddleware = require("./apps/middleware/SortMiddleware");
+// const { exec } = require('child_process');
 
 //Connect to DB
 db.connect();
@@ -67,6 +68,10 @@ app.set("views", path.join(__dirname, "resources/views"));
 route(app);
 
 //127.0.0.1 localhost
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+app.listen(port, async() =>
+  {
+      var server = `http://localhost:${port}`;
+      console.log(`App is listening at ${server}`);
+      // exec(`start ${server}`);
+  }
+);
