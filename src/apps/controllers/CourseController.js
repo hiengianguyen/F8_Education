@@ -20,11 +20,18 @@ class CourseController {
 
   // [POST] /courses/store
   async store(req, res, next) {
+    console.log("code run");
     const formData = req.body;
     formData.image = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`;
     const course = new Course(formData);
 
-    await course.save();
+    await course
+      .save()
+      .then((savedCourse) => console.log(savedCourse))
+      .catch((err) => {
+        console.log("ERRORRRRRRRRRRR");
+      });
+
     await res.redirect("/");
   }
 
@@ -48,14 +55,14 @@ class CourseController {
 
   // [DELETE] /courses/:id
   destroy(req, res, next) {
-    Course.delete({ _id: req.params.id })
+    Course.updateOne({ _id: req.params.id }, { $set: { isDeleted: true } })
       .then(() => res.redirect("back"))
       .catch(next);
   }
 
   // [PATCH] /courses/:id/restore
   restore(req, res, next) {
-    Course.restore({ _id: req.params.id })
+    Course.updateOne({ _id: req.params.id }, { $set: { isDeleted: false } })
       .then(() => res.redirect("back"))
       .catch(next);
   }
@@ -64,7 +71,10 @@ class CourseController {
   handleMethod(req, res, next) {
     switch (req.body.action) {
       case "delete":
-        Course.delete({ _id: { $in: req.body.courseIds } })
+        Course.updateMany(
+          { _id: { $in: req.body.courseIds } },
+          { $set: { isDeleted: true } }
+        )
           .then(() => res.redirect("back"))
           .catch(next);
         break;

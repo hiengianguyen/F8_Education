@@ -7,7 +7,7 @@ const {
 class SiteController {
   // [GET] /
   index(req, res, next) {
-    Course.find({})
+    Course.find({ isDeleted: false })
       .then((courses) => {
         res.render("home", {
           courses: multipleMongooseToObject(courses),

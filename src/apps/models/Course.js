@@ -10,6 +10,8 @@ const Course = new Schema(
     image: { type: String },
     videoId: { type: String, required: true },
     slug: { type: String, slug: "name", unique: true },
+    // deleted: { type: Boolean, default: false },
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,
