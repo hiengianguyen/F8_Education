@@ -19,20 +19,13 @@ class CourseController {
   }
 
   // [POST] /courses/store
-  async store(req, res, next) {
-    console.log("code run");
+  store(req, res, next) {
     const formData = req.body;
-    formData.image = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`;
     const course = new Course(formData);
 
-    await course
-      .save()
-      .then((savedCourse) => console.log(savedCourse))
-      .catch((err) => {
-        console.log("ERRORRRRRRRRRRR");
-      });
-
-    await res.redirect("/");
+    course.save()
+      .then(() => res.redirect("/"))
+      .catch((err) => next(err))
   }
 
   // [GET] /courses/:id/edit
@@ -54,7 +47,7 @@ class CourseController {
   }
 
   // [DELETE] /courses/:id
-  destroy(req, res, next) {
+  softDelete(req, res, next) {
     Course.updateOne({ _id: req.params.id }, { $set: { isDeleted: true } })
       .then(() => res.redirect("back"))
       .catch(next);
@@ -78,9 +71,31 @@ class CourseController {
           .then(() => res.redirect("back"))
           .catch(next);
         break;
+      case "restore":
+      Course.updateMany(
+        { _id: { $in: req.body.courseIds } },
+        { $set: { isDeleted: false } }
+      )
+        .then(() => res.redirect("back"))
+        .catch(next);
+      break;
+
+      case "hardDelete":
+      Course.deleteMany(
+        { _id: { $in: req.body.courseIds } }
+      )
+        .then(() => res.redirect("back"))
+        .catch(next);
+      break;
       default:
         res.json({ message: "Action is invalid" });
     }
+  }
+  // [DELETE] /courses/:id
+  hardDelete(req, res, next) {
+    Course.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
   }
 }
 
