@@ -9,15 +9,23 @@
 
   <div class="row ms-2">
     {{#each courses}}
-      <div class="card me-2 mt-2" style="width: 18rem;">
+      <div
+        class="card course-card"
+        style="width: 18rem; margin: 10px; padding: 0"
+      >
+        <a href="/courses/{{this.slug}}">
+          <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}" />
+        </a>
         <div class="card-body">
-          <h5 class="card-title">{{this.name}}</h5>
-          <p class="card-text mb-4">{{this.description}}</p>
-          <a href="courses/{{this.slug}}" class="btn btn-primary">Đi tới khoá học</a>
+          <a href="/courses/{{this.slug}}">
+            <h5 class="card-title">{{this.name}}</h5>
+          </a>
+          <p class="card-text">{{this.description}}</p>
+          <a href="/courses/{{this.slug}}" class="btn btn-primary">Truy cập</a>
         </div>
       </div>
-      {{else}}
-      <h3>Không tìm thấy khóa học nào</h3>
+    {{else}}
+      <h3>Không tìm thấy khoá học</h3>
     {{/each}}
   </div>
 </div>

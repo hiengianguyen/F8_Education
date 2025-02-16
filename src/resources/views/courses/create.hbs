@@ -1,17 +1,17 @@
 <div class="mt-4 container">
   <form method="POST" action="/courses/store">
     <div class="mb-3">
-      <label for="name-course-input" class="form-label">Name Course</label>
+      <label for="name-input" class="form-label">Tên khoá học</label>
       <input
         type="text"
         name="name"
         class="form-control"
-        id="name-course-input"
+        id="name-input"
       />
     </div>
 
     <div class="mb-3">
-      <label for="description-input" class="form-label">Description</label>
+      <label for="description-input" class="form-label">Mô tả</label>
       <input
         type="text"
         name="description"
@@ -20,13 +20,23 @@
       />
     </div>
 
+     <div class="mb-3">
+      <label for="image-input" class="form-label">Đường dẫn hình ảnh</label>
+      <input
+        type="text"
+        name="image"
+        class="form-control"
+        id="image-input"
+      />
+    </div>
+
     <div class="mb-3">
-      <label for="vId-input" class="form-label">Video Id</label>
+      <label for="videoID-input" class="form-label">Video Id</label>
       <input
         type="text"
         name="videoId"
         class="form-control"
-        id="search-input"
+        id="videoID-input"
       />
     </div>
     <button type="submit" class="btn btn-primary">Tạo Khoá Học</button>

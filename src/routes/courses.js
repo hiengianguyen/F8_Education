@@ -9,7 +9,8 @@ router.get("/:id/edit", CourseController.edit);
 router.post("/handle-method-course", CourseController.handleMethod);
 router.put("/:id", CourseController.update);
 router.patch("/:id/restore", CourseController.restore);
-router.delete("/:id", CourseController.destroy);
+router.delete("/:id", CourseController.softDelete);
+router.delete("/:id/delete", CourseController.hardDelete);
 router.get("/:slug", CourseController.show);
 
 module.exports = router;
