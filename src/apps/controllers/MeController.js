@@ -1,20 +1,16 @@
 const Course = require("../models/Course");
-const {
-  mongooseToObject,
-  multipleMongooseToObject,
-} = require("../../until/mongoose");
-const e = require("express");
+const { multipleMongooseToObject } = require("../../until/mongoose");
 
 class MeController {
   // [GET] /me/stored/courses
   storedCourses(req, res, next) {
     Promise.all([
-      Course.find({}).sortable(req),
-      Course.countDocumentsDeleted({}),
+      Course.find({ isDeleted: false }).sortable(req),
+      Course.countDocuments({ isDeleted: true }),
     ])
       .then(([courses, deleteCount]) => {
         res.render("me/stored-courses", {
-          deleteCount,
+          deleteCount: deleteCount,
           courses: multipleMongooseToObject(courses),
         });
       })
@@ -23,8 +19,9 @@ class MeController {
 
   // [GET] /me/trash/courses
   trashCourses(req, res, next) {
-    Course.findDeleted({})
+    Course.find({ isDeleted: true })
       .then((courses) => {
+        console.log(courses);
         res.render("me/trash-courses", {
           courses: multipleMongooseToObject(courses),
         });
