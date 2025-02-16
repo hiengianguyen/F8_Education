@@ -80,8 +80,6 @@
 <script>
 const exampleModal = document.getElementById('delete-course-modal')
 
-
-
 if (exampleModal) {
     var courseId;
   exampleModal.addEventListener('show.bs.modal', function(event) {
@@ -121,8 +119,7 @@ if (exampleModal) {
       submitMethodBtn.attr("disabled", "disabled")
     }
   }
-
-
+  
   submitMethodBtn.on("submit", function(e) {
     var isSubmitable = !$(this).hasClass("disabled")
 

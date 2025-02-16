@@ -8,7 +8,6 @@ function routes(app) {
   app.use("/courses", coursesRouter);
   app.use("/me", meRouter);
   app.get("/", siteRouter);
-
   app.get("/search", siteRouter);
 }
 
