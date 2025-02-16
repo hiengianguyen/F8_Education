@@ -23,10 +23,13 @@ app.use(
 
 app.use(express.json());
 
+//Static file
 app.use(express.static(path.join(__dirname, "public")));
 
+//Method override
 app.use(methodOverride("_method"));
 
+//Custom middleware
 app.use(SortMiddleware);
 
 // //Http logger
@@ -40,9 +43,11 @@ app.engine(
     helpers: require("./helpers/handlebars"),
   })
 );
+
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
+//Route init
 route(app);
 
 //127.0.0.1 localhost

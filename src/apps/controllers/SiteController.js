@@ -1,7 +1,11 @@
 const Course = require("../models/Course");
-const { multipleMongooseToObject, mongooseToObject } = require("../../until/mongoose");
+const {
+  multipleMongooseToObject,
+  mongooseToObject,
+} = require("../../until/mongoose");
 
 class SiteController {
+  // [GET] /
   index(req, res, next) {
     Course.find({})
       .then((courses) => {
@@ -11,24 +15,25 @@ class SiteController {
       })
       .catch((err) => next(err));
   }
-
+  // [GET] /search
   search(req, res, next) {
     Course.find({})
-    .then((courses) => {
-      let filteredCourses = courses;
-      if (req.query.keyword) {
-        const keyword = req.query.keyword.toLowerCase().trim();
-        filteredCourses = courses.filter(course =>
-          course.name.toLowerCase().includes(keyword) ||
-          course.slug.includes(keyword)
-        );
-      }
-      res.render("search", {
-        courses: multipleMongooseToObject(filteredCourses),
-        inputValue: req.query.keyword,
-      });
-    })
-    .catch((err) => next(err));
-}
+      .then((courses) => {
+        let filteredCourses = courses;
+        if (req.query.keyword) {
+          const keyword = req.query.keyword.toLowerCase().trim();
+          filteredCourses = courses.filter(
+            (course) =>
+              course.name.toLowerCase().includes(keyword) ||
+              course.slug.includes(keyword)
+          );
+        }
+        res.render("search", {
+          courses: multipleMongooseToObject(filteredCourses),
+          inputValue: req.query.keyword,
+        });
+      })
+      .catch((err) => next(err));
+  }
 }
 module.exports = new SiteController();
