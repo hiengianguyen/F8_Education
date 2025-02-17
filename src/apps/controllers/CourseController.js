@@ -63,7 +63,7 @@ class CourseController {
   // [POST] /courses/handle-method-course
   handleMethod(req, res, next) {
     switch (req.body.action) {
-      case "delete":
+      case "softDelete":
         Course.updateMany(
           { _id: { $in: req.body.courseIds } },
           { $set: { isDeleted: true } }
