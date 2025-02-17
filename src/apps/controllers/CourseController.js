@@ -19,12 +19,12 @@ class CourseController {
   }
 
   // [POST] /courses/store
-  store(req, res, next) {
+  async store(req, res, next) {
     const formData = req.body;
-    const course = new Course(formData);
+    const courses = new Course(formData);
 
-    course.save()
-      .then(() => res.redirect("/"))
+    await Course.insertMany([courses])
+      .then(() => res.redirect("/me/stored/courses"))
       .catch((err) => next(err))
   }
 
