@@ -28,7 +28,8 @@ Course.query.sortable = function (req) {
 };
 
 //model plugin
-mongoose.plugin(slug);
+mongoose.plugin(Slug);
+
 // Add plugin
 Course.plugin(mongooseDelete, {
   deletedAt: true,
