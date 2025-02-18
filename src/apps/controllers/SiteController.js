@@ -1,8 +1,7 @@
 const Course = require("../models/Course");
 const {
-  multipleMongooseToObject,
-  mongooseToObject,
-} = require("../../until/mongoose");
+  multipleMongooseToObject
+} = require("../../until/mongooseFunctions");
 
 class SiteController {
   // [GET] /
@@ -15,6 +14,7 @@ class SiteController {
       })
       .catch((err) => next(err));
   }
+  
   // [GET] /search
   search(req, res, next) {
     Course.find({})
@@ -33,7 +33,9 @@ class SiteController {
           inputValue: req.query.keyword,
         });
       })
-      .catch((err) => res.redirect("/"));
+      .catch((err) => res.redirect("/search"));
   }
-}
+
+  }
+
 module.exports = new SiteController();

@@ -1,6 +1,6 @@
 const Course = require("../models/Course");
-const { mongooseToObject } = require("../../until/mongoose");
-const generateSlug = require("../../until/slug");
+const { mongooseToObject } = require("../../until/mongooseFunctions");
+const generateSlug = require("../../until/generateSlug");
 
 class CourseController {
   // [GET] /courses/:slug
@@ -24,8 +24,6 @@ class CourseController {
     const formData = req.body;
     formData.slug = generateSlug(req.body.name);
     const courses = new Course(formData);
-
-    console.log(courses);
 
     await Course.insertMany([courses])
       .then(() => res.redirect("/me/stored/courses"))
@@ -75,22 +73,22 @@ class CourseController {
           .then(() => res.redirect("back"))
           .catch(next);
         break;
-      case "restore":
-      Course.updateMany(
-        { _id: { $in: req.body.courseIds } },
-        { $set: { isDeleted: false } }
-      )
-        .then(() => res.redirect("back"))
-        .catch(next);
-      break;
-
       case "hardDelete":
-      Course.deleteMany(
-        { _id: { $in: req.body.courseIds } }
-      )
-        .then(() => res.redirect("back"))
-        .catch(next);
-      break;
+        Course.deleteMany(
+          { _id: { $in: req.body.courseIds } }
+        )
+          .then(() => res.redirect("back"))
+          .catch(next);
+        break;
+      case "restore":
+        Course.updateMany(
+          { _id: { $in: req.body.courseIds } },
+          { $set: { isDeleted: false } }
+        )
+          .then(() => res.redirect("back"))
+          .catch(next);
+        break;
+        
       default:
         res.json({ message: "Action is invalid" });
     }

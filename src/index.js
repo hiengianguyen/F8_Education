@@ -6,8 +6,7 @@ const methodOverride = require("method-override");
 const app = express();
 const route = require("./routes");
 const db = require("./config/db");
-const SortMiddleware = require("./apps/middleware/SortMiddleware");
-// const { exec } = require('child_process');
+const sortMiddleware = require("./apps/middleware/SortMiddleware");
 
 require("dotenv").config();
 const port = process.env.PORT || 3001;
@@ -30,7 +29,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
 //Custom middleware
-app.use(SortMiddleware);
+app.use(sortMiddleware);
 
 // //Http logger
 // app.use(morgan('combined'));
@@ -54,5 +53,4 @@ route(app);
 app.listen(port, async () => {
   var server = `http://localhost:${port}`;
   console.log(`App is listening at ${server}`);
-  // exec(`start ${server}`);
 });
