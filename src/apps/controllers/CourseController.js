@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
 const { mongooseToObject } = require("../../until/mongoose");
+const generateSlug = require("../../until/slug");
 
 class CourseController {
   // [GET] /courses/:slug
@@ -21,7 +22,10 @@ class CourseController {
   // [POST] /courses/store
   async store(req, res, next) {
     const formData = req.body;
+    formData.slug = generateSlug(req.body.name);
     const courses = new Course(formData);
+
+    console.log(courses);
 
     await Course.insertMany([courses])
       .then(() => res.redirect("/me/stored/courses"))
