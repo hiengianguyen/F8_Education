@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const mongooseDelete = require("mongoose-delete");
 const Schema = mongoose.Schema;
-const slug = require("mongoose-slug-generator");
 
 const Course = new Schema(
   {
@@ -9,7 +8,7 @@ const Course = new Schema(
     description: { type: String },
     image: { type: String },
     videoId: { type: String },
-    slug: { type: String, slug: "name", unique: true },
+    slug: { type: String },
     isDeleted: { type: Boolean, default: false },
   },
   {
@@ -26,9 +25,6 @@ Course.query.sortable = function (req) {
   }
   return this;
 };
-
-//model plugin
-mongoose.plugin(slug);
 
 // Add plugin
 Course.plugin(mongooseDelete, {

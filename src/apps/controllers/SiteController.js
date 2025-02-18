@@ -33,7 +33,7 @@ class SiteController {
           inputValue: req.query.keyword,
         });
       })
-      .catch((err) => next(err));
+      .catch((err) => res.redirect("/"));
   }
 }
 module.exports = new SiteController();
