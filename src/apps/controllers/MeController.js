@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-const { multipleMongooseToObject } = require("../../until/mongoose");
+const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 
 class MeController {
   // [GET] /me/stored/courses
