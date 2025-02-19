@@ -1,4 +1,4 @@
-const Course = require("../models/Course");
+const Course = require("../models/CourseModel");
 const {
   multipleMongooseToObject
 } = require("../../until/mongooseFunctions");

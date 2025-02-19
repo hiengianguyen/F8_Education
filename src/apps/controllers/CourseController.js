@@ -1,6 +1,7 @@
-const Course = require("../models/Course");
+const Course = require("../models/CourseModel");
 const { mongooseToObject } = require("../../until/mongooseFunctions");
 const generateSlug = require("../../until/generateSlug");
+const splitGetID = require("../../until/extractVideoIdFromUrl");
 
 class CourseController {
   // [GET] /courses/:slug
@@ -23,6 +24,7 @@ class CourseController {
   async store(req, res, next) {
     const formData = req.body;
     formData.slug = generateSlug(req.body.name);
+    formData.videoId = splitGetID(req.body.videoUrl);
     const courses = new Course(formData);
 
     await Course.insertMany([courses])
@@ -88,7 +90,7 @@ class CourseController {
           .then(() => res.redirect("back"))
           .catch(next);
         break;
-        
+
       default:
         res.json({ message: "Action is invalid" });
     }
