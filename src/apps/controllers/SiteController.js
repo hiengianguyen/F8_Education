@@ -17,7 +17,7 @@ class SiteController {
   
   // [GET] /search
   search(req, res, next) {
-    Course.find({})
+    Course.find({ isDeleted: false })
       .then((courses) => {
         let filteredCourses = courses;
         if (req.query.keyword) {
