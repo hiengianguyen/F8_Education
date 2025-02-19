@@ -2,7 +2,8 @@ const Course = require("../models/CourseModel");
 const { mongooseToObject } = require("../../until/mongooseFunctions");
 const generateSlug = require("../../until/generateSlug");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
-
+const { removeVI } = require('jsrmvi');
+const { nanoid } = require('nanoid');
 class CourseController {
   // [GET] /courses/:slug
   show(req, res, next) {
@@ -23,7 +24,7 @@ class CourseController {
   // [POST] /courses/store
   async store(req, res, next) {
     const formData = req.body;
-    formData.slug = generateSlug(req.body.name);
+    formData.slug = removeVI(req.body.name) + '-' + nanoid(4);    ;
     formData.videoId = splitGetID(req.body.videoUrl);
     const courses = new Course(formData);
 
