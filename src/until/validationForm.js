@@ -23,7 +23,7 @@ function varidator(selector, option = {}) {
       
       min: function(min) {
         return function(value) {
-          return value.length >= min ? undefined : `Vui lòng nhập ${min} kí tự`
+          return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`
         }
       },
 
@@ -34,12 +34,12 @@ function varidator(selector, option = {}) {
       },
 
       urlYoutube: function(value) {
-        return value.includes("youtube.com/watch?v=") ? undefined : 'Vui lòng nhập đúng đường dẫn url Youtube VD: https://www.youtube.com/watch?v=...'
+        return value.includes("youtube.com/watch?v=") ? undefined : 'Vui lòng nhập đúng đường dẫn Youtube video với định dạng: https://www.youtube.com/watch?v=...'
       },
 
-      urlImage: function(value) {
-        var regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
-        return regex.test(value) ? undefined : 'Vui lòng nhập đúng định dạng ảnh'
+      url: function(value) {
+        var regex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+        return regex.test(value) ? undefined : 'Vui lòng nhập đúng đường dẫn'
       }
     }
   
