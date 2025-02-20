@@ -33,6 +33,10 @@ function varidator(selector, option = {}) {
         }
       },
 
+      number: function(value) {
+        return isNaN(value) ? 'Vui lòng nhập số (Viết liền)' : undefined
+      },
+
       urlYoutube: function(value) {
         return value.includes("youtube.com/watch?v=") ? undefined : 'Vui lòng nhập đúng đường dẫn Youtube video với định dạng: https://www.youtube.com/watch?v=...'
       },
