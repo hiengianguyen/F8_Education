@@ -22,14 +22,17 @@ app.use(
 
 app.use(express.json());
 
-//Static file
-app.use(express.static(path.join(__dirname, "public")));
 
 //Method override
 app.use(methodOverride("_method"));
 
+//Static file
+app.use(express.static(path.join(__dirname, "public")));
+
 //Custom middleware
 app.use(sortMiddleware);
+
+app.use(express.static(path.join(__dirname, "until")));
 
 // //Http logger
 // app.use(morgan('combined'));

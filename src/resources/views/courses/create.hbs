@@ -1,44 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
 <div class="mt-4 container">
-  <form method="POST" action="/courses/store">
-    <div class="mb-3">
-      <label for="name-input" class="form-label">Tên khoá học</label>
-      <input
-        type="text"
-        name="name"
-        class="form-control"
-        id="name-input"
-      />
-    </div>
+  <form id="create-course-form" method="POST" action="/courses/store">
+    <div class="contact-form">
+      <div class="mb-3 form-group">
+        <label for="name-input" class="form-label">Tên khoá học</label>
+        <input
+          type="text"
+          name="name"
+          rules="required|min:5"
+          class="form-control"
+          id="name-input"
+        />
+        <span class="form-message"></span>
+      </div>
 
-    <div class="mb-3">
-      <label for="description-input" class="form-label">Mô tả</label>
-      <input
-        type="text"
-        name="description"
-        class="form-control"
-        id="description-input"
-      />
-    </div>
+      <div class="mb-3 form-group">
+        <label for="description-input" class="form-label">Mô tả</label>
+        <input
+          type="text"
+          name="description"
+          rules="required|min:10"
+          class="form-control"
+          id="description-input"
+        />
+        <span class="form-message"></span>
+      </div>
 
-    <div class="mb-3">
-      <label for="image-input" class="form-label">Đường dẫn hình ảnh</label>
-      <input
-        type="text"
-        name="image"
-        class="form-control"
-        id="image-input"
-      />
-    </div>
+      <div class="mb-3 form-group">
+        <label for="image-input" class="form-label">Đường dẫn hình ảnh</label>
+        <input
+          type="text"
+          name="image"
+          rules="required|urlImage"
+          class="form-control"
+          id="image-input"
+        />
+        <span class="form-message"></span>
+      </div>
 
-    <div class="mb-3">
-      <label for="videoUrl-input" class="form-label">Đường dẫn video (Youtube)</label>
-      <input
-        type="text"
-        name="videoUrl"
-        class="form-control"
-        id="videoUrl-input"
-      />
+      <div class="mb-3 form-group">
+        <label for="videoUrl-input" class="form-label">Đường dẫn video (Youtube)</label>
+        <input
+          type="text"
+          name="videoUrl"
+          rules="required|urlYoutube"
+          class="form-control"
+          id="videoUrl-input"
+        />
+        <span class="form-message"></span>
+      </div>
+      <button type="submit" class="btn btn-primary">Tạo Khoá Học</button>
     </div>
-    <button type="submit" class="btn btn-primary">Tạo Khoá Học</button>
   </form>
 </div>
+
+<script src="/validationForm.js" onload="varidator('#create-course-form')"></script>
+
+</body>
+</html>
