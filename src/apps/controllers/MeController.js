@@ -4,17 +4,21 @@ const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 class MeController {
   // [GET] /me/stored/courses
   storedCourses(req, res, next) {
-    Promise.all([
-      Course.find({ isDeleted: false }).sortable(req),
-      Course.countDocuments({ isDeleted: true }),
-    ])
-      .then(([courses, deleteCount]) => {
-        res.render("me/stored-courses", {
-          deleteCount: deleteCount,
-          courses: multipleMongooseToObject(courses),
-        });
-      })
-      .catch(next);
+    if(req.session.isLogin) {
+      Promise.all([
+        Course.find({ isDeleted: false }).sortable(req),
+        Course.countDocuments({ isDeleted: true }),
+      ])
+        .then(([courses, deleteCount]) => {
+          res.render("me/stored-courses", {
+            deleteCount: deleteCount,
+            courses: multipleMongooseToObject(courses),
+          });
+        })
+        .catch(next);
+    } else {
+      res.redirect("/")
+    }
   }
 
   // [GET] /me/trash/courses

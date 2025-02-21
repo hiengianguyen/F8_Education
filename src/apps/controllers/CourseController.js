@@ -18,7 +18,11 @@ class CourseController {
 
   // [GET] /courses/create
   create(req, res) {
+    if(req.session.isLogin) {
     res.render("courses/create");
+    } else {
+      res.redirect("/")
+    }
   }
 
   // [POST] /courses/store

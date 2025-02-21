@@ -7,6 +7,7 @@ const app = express();
 const route = require("./routes");
 const db = require("./config/db");
 const sortMiddleware = require("./apps/middleware/SortMiddleware");
+const session = require('express-session');
 
 require("dotenv").config();
 const port = process.env.PORT || 3001;
@@ -32,7 +33,22 @@ app.use(express.static(path.join(__dirname, "public")));
 //Custom middleware
 app.use(sortMiddleware);
 
+// Session middleware
+app.use(
+  session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Set to true if using HTTPS
+  })
+);
+
 app.use(express.static(path.join(__dirname, "until")));
+
+app.use((req, res, next) => {
+    res.locals.isHomepage = req.path != "/"
+    next()
+});
 
 // //Http logger
 // app.use(morgan('combined'));
