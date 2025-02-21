@@ -1,12 +1,12 @@
 {
-  "name": "blog",
+  "name": "F8 Education",
   "version": "1.0.0",
-  "main": "src\\index.js",
+  "main": "src/index.js",
   "scripts": {
-    "beutify": "lint-staged",
-    "start": "nodemon --inspect src\\index.js",
+    "beautify": "lint-staged",
+    "start": "nodemon --inspect src/index.js",
     "watch": "node-sass -w src/resources/scss/ -o src/public/css/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'Error: no test specified' && exit 1"
   },
   "keywords": [
     "node-web"

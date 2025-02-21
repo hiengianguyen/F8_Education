@@ -16,6 +16,7 @@ const Course = new Schema(
     timestamps: true,
   }
 );
+
 // Custom query helpers
 Course.query.sortable = function (req) {
   if (req.query.hasOwnProperty("_sort")) {
