@@ -1,9 +1,9 @@
 const Course = require("../models/CourseModel");
-const { mongooseToObject } = require("../../until/mongooseFunctions");
-const generateSlug = require("../../until/generateSlug");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
+const { mongooseToObject } = require("../../until/mongooseFunctions");
 const { removeVI } = require('jsrmvi');
 const { nanoid } = require('nanoid');
+
 class CourseController {
   // [GET] /courses/:slug
   show(req, res, next) {
