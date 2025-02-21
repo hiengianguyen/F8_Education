@@ -1,7 +1,7 @@
 class LoginController {
     // [GET] /
     index(req, res) {
-        res.render('login');
+        res.render('auth/login');
     }
     // [GET] /store
     store(req, res) {
