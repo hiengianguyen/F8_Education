@@ -23,7 +23,7 @@
       aria-label="Second navbar example"
     >
       <div class="container-fluid containers-navbar">
-        <a class="navbar-brand" href="/">F8 Education</a>
+        <a class="navbar-brand" href="/home">F8 Education</a>
         <ul class="navbar-nav">
   
         <li class="nav-item">
@@ -51,10 +51,11 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExample02">
           <ul class="navbar-nav ml-auto">
-
+            {{#if isHomepage}}
             <li class="nav-item">
-              <a href="/login" class="btn btn-outline-success my-2 my-sm-0">Đăng nhập</a>
+              <a href="/auth/sign-out" class="btn btn-outline-success my-2 my-sm-0">Đăng Xuất</a>
             </li>
+            {{/if}}
             <li class="nav-item">
               <a class="nav-link fs-3 text-white ms-3" href="/search"><i class="fa-solid fa-magnifying-glass"></i></a>
             </li>
