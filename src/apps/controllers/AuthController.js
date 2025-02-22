@@ -16,16 +16,28 @@ class AuthController {
   // [POST] /sign-up
   signUp(req, res) {
     try {
-      const { fullName, email, password } = req.body;
-      const salt = bcrypt.genSaltSync(10);
-      const hashPassword = bcrypt.hashSync(password, salt);
-      const user = new User({
-        fullName,
-        email,
-        password: hashPassword,
+      const { fullName, email, password, phoneNumber } = req.body;
+      User.findOne({ email: email }).then((user) => {
+        if (!user) {
+          const salt = bcrypt.genSaltSync(10);
+          const hashPassword = bcrypt.hashSync(password, salt);
+          const user = new User({
+            fullName,
+            email,
+            phoneNumber,
+            password: hashPassword,
+          });
+          user.save();
+          res.redirect("/auth/sign-in");
+        } else {
+          res.render("auth/sign-up", {
+            fullNameInput: fullName,
+            emailInput: email,
+            phoneNumberInput: phoneNumber,
+            messageEmailInput: "Email đã tồn tại!",
+          });
+        }
       });
-      user.save();
-      res.redirect("/auth/sign-in");
     } catch (error) {
       console.log(error);
     }
@@ -44,13 +56,14 @@ class AuthController {
             res.redirect("/home");
           } else {
             res.render("auth/sign-in", {
-              valueEmail: email,
+              valueEmailInput: email,
               messagePassInput: "Mật khẩu vừa nhập không đúng!",
             });
           }
         } else {
           res.render("auth/sign-in", {
-            messageEmailInput: "Email vừa nhập chưa đăng ký!",
+            valueEmailInput: email,
+            messageEmailInput: "Email vừa nhập không tồn tại!",
           });
         }
       })

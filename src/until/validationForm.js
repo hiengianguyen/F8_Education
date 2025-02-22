@@ -1,5 +1,4 @@
 function varidator(selector, option = {}) {
-  var _this = this;
   var formRules = {};
 
   function getParent(element, selector) {
@@ -13,44 +12,54 @@ function varidator(selector, option = {}) {
 
   var VaridatorRules = {
     required: function (value) {
-      return value ? undefined : "Vui lòng nhập giá trị";
+      return value ? undefined : "Vui lòng nhập giá trị!";
     },
 
     email: function (value) {
       var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return regex.test(value) ? undefined : "Vui lòng nhập Email";
+      return regex.test(value)
+        ? undefined
+        : "Vui lòng nhập Email đúng định dạng!";
     },
 
     min: function (min) {
       return function (value) {
-        return value.length >= min
+        return value.length >= Number(min)
           ? undefined
-          : `Vui lòng nhập tối thiểu ${min} kí tự`;
+          : `Vui lòng nhập tối thiểu ${min} kí tự!`;
       };
     },
 
     max: function (max) {
       return function (value) {
-        return value.length <= max
+        return value.length <= Number(max)
           ? undefined
-          : `Vui lòng nhập nhỏ hơn ${max} kí tự`;
+          : `Vui lòng nhập nhỏ hơn ${max} kí tự!`;
       };
     },
 
     number: function (value) {
-      return isNaN(value) ? "Vui lòng nhập số (Viết liền)" : undefined;
+      return isNaN(value) ? "Vui lòng nhập số (Viết liền)!" : undefined;
+    },
+
+    length: function (length) {
+      return function (value) {
+        return value.length === Number(length)
+          ? undefined
+          : `Vui lòng nhập đúng ${length} kí tự!`;
+      };
     },
 
     urlYoutube: function (value) {
       return value.includes("youtube.com/watch?v=")
         ? undefined
-        : "Vui lòng nhập đúng đường dẫn Youtube video với định dạng: https://www.youtube.com/watch?v=...";
+        : "Vui lòng nhập đúng đường dẫn Youtube video với định dạng: https://www.youtube.com/watch?v=...!";
     },
 
     url: function (value) {
       var regex =
         /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-      return regex.test(value) ? undefined : "Vui lòng nhập đúng đường dẫn";
+      return regex.test(value) ? undefined : "Vui lòng nhập đúng đường dẫn!";
     },
   };
 
