@@ -11,6 +11,7 @@ class CourseController {
       .then((course) => {
         res.render("courses/show", {
           course: mongooseToObject(course),
+          userName: req.session.userName,
         });
       })
       .catch((err) => next(err));
