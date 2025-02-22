@@ -25,7 +25,7 @@ class AuthController {
         password: hashPassword,
       });
       user.save();
-      res.redirect("auth/sign-in");
+      res.redirect("/auth/sign-in");
     } catch (error) {
       console.log(error);
     }
