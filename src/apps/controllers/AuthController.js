@@ -1,6 +1,7 @@
 const { mongooseToObject } = require("../../until/mongooseFunctions");
 const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
+const Handlebars = require("handlebars");
 
 class AuthController {
   // [GET] /sign-up
@@ -34,7 +35,7 @@ class AuthController {
             fullNameInput: fullName,
             emailInput: email,
             phoneNumberInput: phoneNumber,
-            messageEmailInput: "Email đã tồn tại!",
+            messageEmailInput: "Email vừa nhập đã tồn tại!",
           });
         }
       });
@@ -47,12 +48,15 @@ class AuthController {
   signIn(req, res) {
     const { email, password } = req.body;
 
-    const user = User.findOne({ email: email })
+    User.findOne({ email: email })
       .then((user) => {
         if (user) {
           const checkPassword = bcrypt.compareSync(password, user.password);
           if (checkPassword) {
             req.session.isLogin = true;
+            req.session.userId = user._id;
+            req.session.userName = user.fullName;
+
             res.redirect("/home");
           } else {
             res.render("auth/sign-in", {
