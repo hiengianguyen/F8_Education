@@ -12,6 +12,7 @@
       name="fullName"
       rules="required|min:10"
       id="exampleInputName1"
+      value="{{fullNameInput}}"
     />
     <span class="form-message"></span>
   </div>
@@ -25,8 +26,9 @@
       rules="required|email"
       id="exampleInputEmail1"
       aria-describedby="emailHelp"
+      value="{{emailInput}}"
     />
-    <span class="form-message"></span>
+    <span class="form-message">{{messageEmailInput}}</span>
   </div>
 
   <div class="mb-3 form-group">
@@ -35,8 +37,9 @@
       type="text"
       class="form-control login__input"
       name="phoneNumber"
-      rules="required|number|max:10"
+      rules="required|number|length:10"
       id="exampleInputPhone1"
+      value="{{phoneNumberInput}}"
     />
     <span class="form-message"></span>
   </div>
