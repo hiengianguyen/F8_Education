@@ -10,8 +10,8 @@ function routes(app) {
   app.use("/courses", coursesRouter);
   app.use("/me", meRouter);
   app.use("/", homeRouter);
-  app.use('/', siteRouter);
-  app.use('/auth', authRouter);
+  app.use("/", siteRouter);
+  app.use("/auth", authRouter);
 }
 
 module.exports = routes;

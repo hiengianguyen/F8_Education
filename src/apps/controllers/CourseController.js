@@ -1,8 +1,8 @@
 const Course = require("../models/CourseModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
 const { mongooseToObject } = require("../../until/mongooseFunctions");
-const { removeVI } = require('jsrmvi');
-const { nanoid } = require('nanoid');
+const { removeVI } = require("jsrmvi");
+const { nanoid } = require("nanoid");
 
 class CourseController {
   // [GET] /courses/:slug
@@ -18,23 +18,23 @@ class CourseController {
 
   // [GET] /courses/create
   create(req, res) {
-    if(req.session.isLogin) {
-    res.render("courses/create");
+    if (req.session.isLogin) {
+      res.render("courses/create");
     } else {
-      res.redirect("/")
+      res.redirect("/");
     }
   }
 
   // [POST] /courses/store
   async store(req, res, next) {
     const formData = req.body;
-    formData.slug = removeVI(req.body.name) + '-' + nanoid(4);    ;
+    formData.slug = removeVI(req.body.name) + "-" + nanoid(4);
     formData.videoId = splitGetID(req.body.videoUrl);
     const courses = new Course(formData);
 
     await Course.insertMany([courses])
       .then(() => res.redirect("/me/stored/courses"))
-      .catch((err) => next(err))
+      .catch((err) => next(err));
   }
 
   // [GET] /courses/:id/edit
@@ -81,9 +81,7 @@ class CourseController {
           .catch(next);
         break;
       case "hardDelete":
-        Course.deleteMany(
-          { _id: { $in: req.body.courseIds } }
-        )
+        Course.deleteMany({ _id: { $in: req.body.courseIds } })
           .then(() => res.redirect("back"))
           .catch(next);
         break;

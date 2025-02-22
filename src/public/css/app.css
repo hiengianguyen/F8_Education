@@ -29,3 +29,6 @@
 
 img.img-home-page {
   width: 20pc; }
+
+#form-sign-in .form-message {
+  color: red; }

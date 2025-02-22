@@ -7,7 +7,7 @@ const app = express();
 const route = require("./routes");
 const db = require("./config/db");
 const sortMiddleware = require("./apps/middleware/SortMiddleware");
-const session = require('express-session');
+const session = require("express-session");
 
 require("dotenv").config();
 const port = process.env.PORT || 3001;
@@ -23,7 +23,6 @@ app.use(
 
 app.use(express.json());
 
-
 //Method override
 app.use(methodOverride("_method"));
 
@@ -36,7 +35,7 @@ app.use(sortMiddleware);
 // Session middleware
 app.use(
   session({
-    secret: 'your_secret_key',
+    secret: "your_secret_key",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }, // Set to true if using HTTPS
@@ -46,8 +45,9 @@ app.use(
 app.use(express.static(path.join(__dirname, "until")));
 
 app.use((req, res, next) => {
-    res.locals.isHomepage = req.path != "/"
-    next()
+  const homePage = ["/", "/auth/sign-in", "/auth/sign-up"];
+  res.locals.isHomepage = !homePage.includes(req.path);
+  next();
 });
 
 // //Http logger
