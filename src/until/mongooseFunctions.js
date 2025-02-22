@@ -3,9 +3,7 @@ function mongooseToObject(mongoose) {
 }
 
 function multipleMongooseToObject(mongooses) {
-  return mongooses.map((mongoose) => 
-    mongoose.toObject()
-  );
+  return mongooses.map((mongoose) => mongoose.toObject());
 }
 
 module.exports = { mongooseToObject, multipleMongooseToObject };

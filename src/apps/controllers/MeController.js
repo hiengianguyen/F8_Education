@@ -4,7 +4,7 @@ const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 class MeController {
   // [GET] /me/stored/courses
   storedCourses(req, res, next) {
-    if(req.session.isLogin) {
+    if (req.session.isLogin) {
       Promise.all([
         Course.find({ isDeleted: false }).sortable(req),
         Course.countDocuments({ isDeleted: true }),
@@ -17,7 +17,7 @@ class MeController {
         })
         .catch(next);
     } else {
-      res.redirect("/")
+      res.redirect("/");
     }
   }
 

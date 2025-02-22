@@ -14,4 +14,4 @@ module.exports = function sortMiddleware(req, res, next) {
   }
 
   next();
-}
+};

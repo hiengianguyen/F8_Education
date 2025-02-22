@@ -1,18 +1,35 @@
-
-<form class="container mt-5" id="form-sign-in" action="/auth/sign-in" method="POST">
+<form
+  class="container mt-5"
+  id="form-sign-in"
+  action="/auth/sign-in"
+  method="POST"
+>
   <div class="mb-3 form-group">
     <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" name="email" rules="required|email" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <span class="form-message"></span>
+    <input
+      type="email"
+      class="form-control login__input"
+      name="email"
+      rules="required|email"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      value="{{valueEmail}}"
+    />
+    <span class="form-message">{{messageEmailInput}}</span>
   </div>
 
   <div class="mb-3 form-group">
     <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
-    <input type="password" class="form-control" name="password" rules="required|min:6" id="exampleInputPassword1">
-        <span class="form-message"></span>
+    <input
+      type="password"
+      class="form-control login__input"
+      name="password"
+      rules="required|min:6"
+      id="exampleInputPassword1"
+    />
+    <span class="form-message">{{messagePassInput}}</span>
   </div>
   <button type="submit" class="btn btn-primary">Đăng Nhập</button>
 </form>
 
 <script src="/validationForm.js" onload="varidator('#form-sign-in')"></script>
-

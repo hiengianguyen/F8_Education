@@ -1,4 +1,4 @@
- const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const mongooseDelete = require("mongoose-delete");
 const Schema = mongoose.Schema;
 
@@ -10,7 +10,7 @@ const Course = new Schema(
     videoUrl: { type: String },
     videoId: { type: String },
     slug: { type: String },
-    isDeleted: { type: Boolean, default: false},
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,
