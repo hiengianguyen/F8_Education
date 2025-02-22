@@ -1,0 +1,26 @@
+<div class="mt-5 profile-user rounded shadow-sm bg-body-tertiary">
+  <div class="info-top containers mb-3">
+    <img
+      class="profile-img-user rounded-circle mt-4"
+      src="/img/default-avatar.avif"
+      alt="User"
+    />
+  </div>
+  <div class="info mt-10 containers">
+    <div class="profile-dad-name mb-2">
+      <label for="profile-name-input" class="form-label-profile">Họ và Tên:</label>
+      <h1 class="profile-name-user">
+        {{user.fullName}}
+      </h1>
+    </div>
+    <div class="info-bt mb-3">
+      <label for="profile-email-input" class="form-label-profile">Email:</label>
+      <p class="profile-email-user">{{user.email}}</p>
+      <label for="profile-phone-input" class="form-label-profile">Phone:</label>
+      <p class="profile-phone-user">{{user.phoneNumber}}</p>
+    </div>
+  </div>
+  <div class="btn-edit d-flex justify-content-end">
+    <a href="/me/profile/edit" class="btn btn-secondary btn-lg me-4">Chỉnh Sửa</a>
+  </div>
+</div>

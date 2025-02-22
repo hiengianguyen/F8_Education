@@ -138,7 +138,6 @@ function varidator(selector, option = {}) {
 
     formElement.onsubmit = function (event) {
       event.preventDefault();
-
       var inputs = formElement.querySelectorAll("[name][rules]");
       var isValid = true;
       for (var input of inputs) {

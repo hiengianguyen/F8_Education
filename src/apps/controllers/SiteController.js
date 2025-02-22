@@ -9,6 +9,7 @@ class SiteController {
         .then((courses) => {
           res.render("index", {
             courses: multipleMongooseToObject(courses),
+            userName: req.session.userName,
           });
         })
         .catch(next);
@@ -34,6 +35,7 @@ class SiteController {
           res.render("courses/search", {
             courses: multipleMongooseToObject(filteredCourses),
             inputValue: req.query.keyword,
+            userName: req.session.userName,
           });
         })
         .catch((err) => res.redirect("/search"));

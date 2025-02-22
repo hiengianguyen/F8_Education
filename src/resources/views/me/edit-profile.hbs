@@ -1,0 +1,60 @@
+<form
+  class="mt-5 profile-user rounded shadow-sm bg-body-tertiary"
+  id="form-edit-profile"
+  method="POST"
+  action="/me/profile/update"
+>
+
+  <div class="info-top containers mb-3">
+    <img
+      class="profile-img-user rounded-circle mt-4"
+      src="/img/default-avatar.avif"
+      alt="User"
+    />
+  </div>
+  <div class="profile-dad-name info mt-10 flex-column-reverse mx-5">
+    <div class="form-group">
+      <label for="profile-name-input" class="form-label-profile">Họ và Tên:</label>
+      <input
+        type="text"
+        class="form-control login__input"
+        name="fullName"
+        rules="required|min:10"
+        value="{{user.fullName}}"
+      />
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group my-4">
+      <label for="profile-email-input" class="form-label-profile">Email:</label>
+      <input
+        type="text"
+        class="form-control login__input"
+        name="email"
+        rules="required|email"
+        value="{{user.email}}"
+      />
+      <span class="form-message">{{messageEmailInput}}</span>
+    </div>
+    <div class="form-group">
+      <label for="profile-phone-input" class="form-label-profile">Số điện thoại:</label>
+      <input
+        type="text"
+        class="form-control login__input"
+        name="phoneNumber"
+        rules="required|number|length:10"
+        value="{{user.phoneNumber}}"
+      />
+      <span class="form-message"></span>
+    </div>
+
+  </div>
+  <div class="btn-edit d-flex justify-content-end mt-4">
+    <button type="submit" class="btn bg-success btn-lg text-white me-4">Cập Nhật</button>
+  </div>
+</form>
+
+<script
+  src="/validationForm.js"
+  onload="varidator('#form-edit-profile')"
+></script>

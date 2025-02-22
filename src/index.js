@@ -8,6 +8,7 @@ const route = require("./routes");
 const db = require("./config/db");
 const sortMiddleware = require("./apps/middleware/SortMiddleware");
 const session = require("express-session");
+const Handlebars = require("handlebars");
 
 require("dotenv").config();
 const port = process.env.PORT || 3001;
@@ -42,11 +43,18 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  Handlebars.registerPartial("userName", "{{userName}}");
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "until")));
 
 app.use((req, res, next) => {
   const homePage = ["/", "/auth/sign-in", "/auth/sign-up"];
+  const profilePage = ["/me/profile/edit", "/me/profile"];
   res.locals.isHomepage = !homePage.includes(req.path);
+  res.locals.isProfile = !profilePage.includes(req.path);
   next();
 });
 
