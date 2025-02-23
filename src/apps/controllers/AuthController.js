@@ -55,7 +55,7 @@ class AuthController {
           if (checkPassword) {
             req.session.isLogin = true;
             req.session.userId = user._id;
-            req.session.userName = user.fullName;
+            req.session.fullName = user.fullName;
 
             res.redirect("/home");
           } else {

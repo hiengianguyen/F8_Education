@@ -11,7 +11,7 @@ class CourseController {
       .then((course) => {
         res.render("courses/show", {
           course: mongooseToObject(course),
-          userName: req.session.userName,
+          fullName: req.session.fullName,
         });
       })
       .catch((err) => next(err));
@@ -21,7 +21,7 @@ class CourseController {
   create(req, res) {
     if (req.session.isLogin) {
       res.render("courses/create", {
-        userName: req.session.userName,
+        fullName: req.session.fullName,
       });
     } else {
       res.redirect("/");
@@ -46,7 +46,7 @@ class CourseController {
       .then((course) => {
         res.render("courses/edit", {
           course: mongooseToObject(course),
-          userName: req.session.userName,
+          fullName: req.session.fullName,
         });
       })
       .catch(next);

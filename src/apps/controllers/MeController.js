@@ -11,6 +11,7 @@ class MeController {
     User.findOne({ _id: userId }).then((user) => {
       res.render("me/profile", {
         user: mongooseToObject(user),
+        fullName: req.session.fullName,
       });
     });
   }
@@ -20,6 +21,7 @@ class MeController {
     User.findOne({ _id: userId }).then((user) => {
       res.render("me/edit-profile", {
         user: mongooseToObject(user),
+        fullName: req.session.fullName,
       });
     });
   }
@@ -32,7 +34,7 @@ class MeController {
           User.findOne({ email: email }).then((user) => {
             if (!user) {
               User.updateOne({ _id: req.session.userId }, req.body).then(() => {
-                req.session.userName = fullName;
+                req.session.fullName = fullName;
                 res.redirect("/me/profile");
               });
             } else {
@@ -45,7 +47,7 @@ class MeController {
           });
         } else {
           User.updateOne({ _id: req.session.userId }, req.body).then(() => {
-            req.session.userName = fullName;
+            req.session.fullName = fullName;
             res.redirect("/me/profile");
           });
         }
@@ -64,7 +66,7 @@ class MeController {
           res.render("me/stored-courses", {
             deleteCount: deleteCount,
             courses: multipleMongooseToObject(courses),
-            userName: req.session.userName,
+            fullName: req.session.fullName,
           });
         })
         .catch(next);
@@ -79,7 +81,7 @@ class MeController {
       .then((courses) => {
         res.render("me/trash-courses", {
           courses: multipleMongooseToObject(courses),
-          userName: req.session.userName,
+          fullName: req.session.fullName,
         });
       })
       .catch(next);

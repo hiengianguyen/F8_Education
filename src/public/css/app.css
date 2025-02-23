@@ -41,7 +41,7 @@ img.img-home-page {
   font-weight: 600; }
 
 img.profile-img-user {
-  width: 17pc; }
+  width: 12pc; }
 
 .info p {
   font-size: 18px; }
@@ -49,10 +49,11 @@ img.profile-img-user {
 .profile-user {
   align-self: center;
   background-color: #ccc;
-  margin-left: 35pc;
-  margin-right: 35pc;
   padding-bottom: 2pc; }
 
 .profile-dad-name label {
   font-weight: 600;
-  margin-bottom: 10px; }
+  margin-bottom: 3px; }
+
+.profile-dad-name {
+  padding: 0 15pc; }
