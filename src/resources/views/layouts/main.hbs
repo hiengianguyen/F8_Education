@@ -68,13 +68,13 @@
                   class="btn btn-outline-success my-2 my-sm-0"
                 >Đăng Xuất</a>
               </li>
-            {{/if}}
+            
             <li class="nav-item">
               <a class="nav-link fs-3 text-white ms-3" href="/search"><i
                   class="fa-solid fa-magnifying-glass"
                 ></i></a>
             </li>
-            {{#if (and isProfile isHomepage)}}
+            
               <li class="nav-item">
                 <a
                   class="nav-link fs-3 text-white ms-3 d-flex align-items-center"
@@ -85,12 +85,10 @@
                     src="/img/default-avatar.avif"
                     alt="User"
                   />
-
-                  <p class="fs-6 user-name">{{> userName}}</p>
-
+                  <p class="fs-6 user-name">{{> fullName}}</p>
                 </a>
               </li>
-            {{/if}}
+              {{/if}}
           </ul>
 
         </div>
