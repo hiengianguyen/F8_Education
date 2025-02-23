@@ -45,6 +45,7 @@ app.use(
 
 app.use((req, res, next) => {
   Handlebars.registerPartial("fullName", "{{fullName}}");
+  Handlebars.registerPartial("avatar", "{{avatar}}");
   next();
 });
 

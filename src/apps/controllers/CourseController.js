@@ -12,6 +12,7 @@ class CourseController {
         res.render("courses/show", {
           course: mongooseToObject(course),
           fullName: req.session.fullName,
+          avatar: req.session.avatarUrl,
         });
       })
       .catch((err) => next(err));
@@ -22,6 +23,7 @@ class CourseController {
     if (req.session.isLogin) {
       res.render("courses/create", {
         fullName: req.session.fullName,
+        avatar: req.session.avatarUrl,
       });
     } else {
       res.redirect("/");
@@ -47,6 +49,7 @@ class CourseController {
         res.render("courses/edit", {
           course: mongooseToObject(course),
           fullName: req.session.fullName,
+          avatar: req.session.avatarUrl,
         });
       })
       .catch(next);
