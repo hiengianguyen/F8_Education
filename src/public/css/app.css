@@ -1,77 +1,60 @@
 .card.course-card {
-  margin-bottom: 16px;
-}
+  margin-bottom: 16px; }
 
 .col-des {
-  text-align: center;
-}
+  text-align: center; }
 
 .card-body a {
-  text-decoration: none;
-}
+  text-decoration: none; }
 
 .containers {
-  text-align: center;
-}
+  text-align: center; }
 
 .select-method-course {
   width: 175px;
-  margin: 0 10px;
-}
+  margin: 0 10px; }
 
 .checkbox-all-course {
-  align-items: center;
-}
+  align-items: center; }
 
 .containers-navbar {
-  padding: 0px 90px 0px 20px;
-}
+  padding: 0px 90px 0px 20px; }
 
 .title-store {
-  margin: 0 40px;
-}
+  margin: 0 40px; }
 
 .home-btn {
   margin-right: 135px;
-  margin-top: 40px;
-}
+  margin-top: 40px; }
 
 img.img-home-page {
-  width: 20pc;
-}
+  width: 20pc; }
 
 .form-message {
-  color: red;
-}
+  color: red; }
 
 .nav-link img {
-  width: 35px;
-}
+  width: 35px; }
 
 .user-name {
   margin: 0;
-  font-weight: 600;
-}
+  font-weight: 600; }
 
 img.profile-img-user {
   width: 12pc;
-}
+  height: 12pc; }
 
 .info p {
-  font-size: 18px;
-}
+  font-size: 18px; }
 
 .profile-user {
   align-self: center;
   background-color: #ccc;
-  padding-bottom: 2pc; 
-}
+  padding-bottom: 2pc; }
 
 .profile-dad-name label {
   font-weight: 600;
-  margin-bottom: 3px; 
-}
+  margin-bottom: 3px; }
 
 .profile-dad-name {
-  padding: 0 15pc; 
-}
+  padding: 0 15pc; }

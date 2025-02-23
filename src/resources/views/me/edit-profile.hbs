@@ -7,10 +7,15 @@
 
   <div class="info-top containers mb-3">
     <img
-      class="profile-img-user rounded-circle mt-4"
-      src="/img/default-avatar.avif"
+      class="profile-img-user rounded-circle mt-2"
+      id="profile-img"
+      src="{{user.avatar}}"
       alt="User"
     />
+  </div>
+  <div class="containers">
+    <input class="choose-file-input" type="file" id="formFile" />
+    <input id="avatar-input" name="avatar" type="text" style="display:none" />
   </div>
   <div class="profile-dad-name info mt-8 flex-column-reverse mx-5">
     <div class="form-group">
@@ -48,7 +53,7 @@
       <span class="form-message"></span>
     </div>
 
-    <div class="btn-edit d-flex justify-content-end mt-4">
+    <div class="btn-edit d-flex justify-content-end mt-2">
       <button type="submit" class="btn bg-success btn-lg text-white">Cập Nhật</button>
     </div>
   </div>
@@ -58,3 +63,34 @@
   src="/validationForm.js"
   onload="varidator('#form-edit-profile')"
 ></script>
+
+<script src="/uploadImageToCloudinary.js" defer></script>
+<script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+<script>
+  const inputChooseFileImg = document.getElementById("formFile");
+  const imgProfile = document.getElementById("profile-img");
+  const hiddenAvatarInput = document.getElementById("avatar-input");
+
+  inputChooseFileImg.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    // Khi file được load, cập nhật src của ảnh
+    reader.onload = function (e) {
+      imgProfile.src = e.target.result;
+    };
+
+    // Tải ảnh lên Cloudinary và nhận URL trả về
+    uploadImageToCloudinary(file)
+      .then((imageUrl) => {
+        console.log('Image uploaded successfully:', imageUrl);
+        imgProfile.src = imageUrl; 
+        hiddenAvatarInput.value = imageUrl;
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+        alert('Có lỗi khi tải ảnh lên Cloudinary');
+      });
+  });
+</script>
