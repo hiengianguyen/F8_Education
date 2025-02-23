@@ -10,6 +10,7 @@ class SiteController {
           res.render("index", {
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
+            avatar: req.session.avatarUrl,
           });
         })
         .catch(next);
@@ -36,6 +37,7 @@ class SiteController {
             courses: multipleMongooseToObject(filteredCourses),
             inputValue: req.query.keyword,
             fullName: req.session.fullName,
+            avatar: req.session.avatarUrl,
           });
         })
         .catch((err) => res.redirect("/search"));

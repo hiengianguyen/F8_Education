@@ -12,6 +12,7 @@ class MeController {
       res.render("me/profile", {
         user: mongooseToObject(user),
         fullName: req.session.fullName,
+        avatar: req.session.avatarUrl,
       });
     });
   }
@@ -22,19 +23,24 @@ class MeController {
       res.render("me/edit-profile", {
         user: mongooseToObject(user),
         fullName: req.session.fullName,
+        avatar: req.session.avatarUrl,
       });
     });
   }
 
   updateProfile(req, res, next) {
-    const { email, fullName } = req.body;
+    const { email, fullName, avatar } = req.body;
     User.findOne({ _id: req.session.userId })
       .then((user) => {
+        if (avatar) {
+          req.session.avatarUrl = avatar;
+        } else {
+          req.body.avatar = user.avatar;
+        }
         if (email != user.email) {
           User.findOne({ email: email }).then((user) => {
             if (!user) {
               User.updateOne({ _id: req.session.userId }, req.body).then(() => {
-                req.session.fullName = fullName;
                 res.redirect("/me/profile");
               });
             } else {
@@ -47,10 +53,10 @@ class MeController {
           });
         } else {
           User.updateOne({ _id: req.session.userId }, req.body).then(() => {
-            req.session.fullName = fullName;
             res.redirect("/me/profile");
           });
         }
+        req.session.fullName = fullName;
       })
       .catch((error) => next(error));
   }
@@ -67,6 +73,7 @@ class MeController {
             deleteCount: deleteCount,
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
+            avatar: req.session.avatarUrl,
           });
         })
         .catch(next);
@@ -82,6 +89,7 @@ class MeController {
         res.render("me/trash-courses", {
           courses: multipleMongooseToObject(courses),
           fullName: req.session.fullName,
+          avatar: req.session.avatarUrl,
         });
       })
       .catch(next);

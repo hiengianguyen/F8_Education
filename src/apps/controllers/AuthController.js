@@ -56,6 +56,7 @@ class AuthController {
             req.session.isLogin = true;
             req.session.userId = user._id;
             req.session.fullName = user.fullName;
+            req.session.avatarUrl = user.avatar;
 
             res.redirect("/home");
           } else {
