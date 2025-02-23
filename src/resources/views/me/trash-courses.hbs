@@ -37,7 +37,7 @@
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.description}}</td>
-                <td>{{this.updatedAt}}</td>
+                <td>{{convertToVietnameseDateTime this.updatedAt}}</td>
                 <td class="option-btn text-center">
                     <a href="/me/trash/courses" class="btn btn-primary btn-restore {{this.slug}}" data-id="{{this._id}}">Khôi Phục</a>
                     <a href="/me/trash/courses" class="btn btn-danger btn-delete" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa Vĩnh Viễn</a>

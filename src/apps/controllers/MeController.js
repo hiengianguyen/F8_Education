@@ -64,6 +64,7 @@ class MeController {
           res.render("me/stored-courses", {
             deleteCount: deleteCount,
             courses: multipleMongooseToObject(courses),
+
             userName: req.session.userName,
           });
         })

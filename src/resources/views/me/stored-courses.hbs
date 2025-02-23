@@ -40,7 +40,7 @@
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.description}}</td>
-                <td>{{this.updatedAt}}</td>
+                <td>{{convertToVietnameseDateTime this.updatedAt}}</td>
                 <td>
                     <a href="/courses/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
                     <a href="/courses/{{this._id}}/delete" class="btn btn-danger" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Xóa</a>
