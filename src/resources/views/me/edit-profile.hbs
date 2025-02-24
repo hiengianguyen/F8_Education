@@ -84,7 +84,6 @@
     // Tải ảnh lên Cloudinary và nhận URL trả về
     uploadImageToCloudinary(file)
       .then((imageUrl) => {
-        console.log('Image uploaded successfully:', imageUrl);
         imgProfile.src = imageUrl; 
         hiddenAvatarInput.value = imageUrl;
       })

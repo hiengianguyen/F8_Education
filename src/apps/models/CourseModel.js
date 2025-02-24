@@ -11,6 +11,7 @@ const Course = new Schema(
     videoId: { type: String },
     slug: { type: String },
     isDeleted: { type: Boolean, default: false },
+    createdBy: { type: Object },
   },
   {
     timestamps: true,

@@ -5,12 +5,32 @@ class SiteController {
   // [GET] /home
   index(req, res, next) {
     if (req.session.isLogin) {
-      Course.find({ isDeleted: false })
+      let queryFindCourse;
+      switch (req.session.role) {
+        case "student":
+          queryFindCourse = {
+            isDeleted: false,
+          };
+
+          break;
+        case "teacher":
+          queryFindCourse = {
+            createdBy: { $exists: true },
+          };
+          break;
+        default:
+          queryFindCourse = {
+            isDeleted: false,
+          };
+      }
+
+      Course.find(queryFindCourse)
         .then((courses) => {
           res.render("index", {
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
             avatar: req.session.avatarUrl,
+            isStudent: req.session.role,
           });
         })
         .catch(next);
@@ -38,6 +58,7 @@ class SiteController {
             inputValue: req.query.keyword,
             fullName: req.session.fullName,
             avatar: req.session.avatarUrl,
+            isStudent: req.session.role,
           });
         })
         .catch((err) => res.redirect("/search"));

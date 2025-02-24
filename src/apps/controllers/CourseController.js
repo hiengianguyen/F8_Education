@@ -13,6 +13,7 @@ class CourseController {
           course: mongooseToObject(course),
           fullName: req.session.fullName,
           avatar: req.session.avatarUrl,
+          isStudent: req.session.role,
         });
       })
       .catch((err) => next(err));
@@ -24,6 +25,7 @@ class CourseController {
       res.render("courses/create", {
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
+        isStudent: req.session.role,
       });
     } else {
       res.redirect("/");
@@ -35,6 +37,7 @@ class CourseController {
     const formData = req.body;
     formData.slug = removeVI(req.body.name) + "-" + nanoid(4);
     formData.videoId = splitGetID(req.body.videoUrl);
+    formData.createdBy = req.session.userId;
     const courses = new Course(formData);
 
     await Course.insertMany([courses])
@@ -50,6 +53,7 @@ class CourseController {
           course: mongooseToObject(course),
           fullName: req.session.fullName,
           avatar: req.session.avatarUrl,
+          isStudent: req.session.role,
         });
       })
       .catch(next);

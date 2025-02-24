@@ -16,6 +16,17 @@
           <a href="#" class="btn btn-primary">Đăng Ký</a>
         </div>
       </div>
+    {{else}}
+
+      <div class="containers">
+        <img class="img-empty-course" src="/img/empty.png" alt="No content">
+      <h1>Hiện tại vẫn chưa có khoá học nào được tạo!</h1>
+      <a
+      class="btn bg-success text-white btn-lg mt-2"
+      href="/courses/create"
+      role="button"
+    >Tạo khoá học</a>
+      </div>
     {{/each}}
   </div>
 </div>
