@@ -13,6 +13,8 @@ class MeController {
         user: mongooseToObject(user),
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
+        isStudent: req.session.role,
+        role: user.role == "student" ? "Người Học" : "Người Dạy",
       });
     });
   }
@@ -24,6 +26,7 @@ class MeController {
         user: mongooseToObject(user),
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
+        isStudent: req.session.role,
       });
     });
   }
@@ -65,8 +68,14 @@ class MeController {
   storedCourses(req, res, next) {
     if (req.session.isLogin) {
       Promise.all([
-        Course.find({ isDeleted: false }).sortable(req),
-        Course.countDocuments({ isDeleted: true }),
+        Course.find({
+          createdBy: req.session.userId,
+          isDeleted: false,
+        }).sortable(req),
+        Course.countDocuments({
+          createdBy: req.session.userId,
+          isDeleted: true,
+        }),
       ])
         .then(([courses, deleteCount]) => {
           res.render("me/stored-courses", {
@@ -74,6 +83,7 @@ class MeController {
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
             avatar: req.session.avatarUrl,
+            isStudent: req.session.role,
           });
         })
         .catch(next);
@@ -84,12 +94,13 @@ class MeController {
 
   // [GET] /me/trash/courses
   trashCourses(req, res, next) {
-    Course.find({ isDeleted: true })
+    Course.find({ createdBy: req.session.userId, isDeleted: true })
       .then((courses) => {
         res.render("me/trash-courses", {
           courses: multipleMongooseToObject(courses),
           fullName: req.session.fullName,
           avatar: req.session.avatarUrl,
+          isStudent: req.session.role,
         });
       })
       .catch(next);

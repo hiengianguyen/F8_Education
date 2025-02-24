@@ -46,6 +46,7 @@ app.use(
 app.use((req, res, next) => {
   Handlebars.registerPartial("fullName", "{{fullName}}");
   Handlebars.registerPartial("avatar", "{{avatar}}");
+  Handlebars.registerPartial("role", "{{role}}");
   next();
 });
 
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, "until")));
 app.use((req, res, next) => {
   const homePage = ["/", "/auth/sign-in", "/auth/sign-up"];
   res.locals.isHomepage = !homePage.includes(req.path);
+  
   next();
 });
 

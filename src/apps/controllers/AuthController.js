@@ -17,7 +17,7 @@ class AuthController {
   // [POST] /sign-up
   signUp(req, res) {
     try {
-      const { fullName, email, password, phoneNumber } = req.body;
+      const { fullName, email, password, phoneNumber, role } = req.body;
       User.findOne({ email: email }).then((user) => {
         if (!user) {
           const salt = bcrypt.genSaltSync(10);
@@ -26,6 +26,7 @@ class AuthController {
             fullName,
             email,
             phoneNumber,
+            role,
             password: hashPassword,
           });
           user.save();
@@ -57,6 +58,7 @@ class AuthController {
             req.session.userId = user._id;
             req.session.fullName = user.fullName;
             req.session.avatarUrl = user.avatar;
+            req.session.role = user.role;
 
             res.redirect("/home");
           } else {

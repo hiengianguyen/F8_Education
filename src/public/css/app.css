@@ -62,3 +62,6 @@ img.profile-img-user {
 .nav-item img {
   width: 2.4pc;
   height: 2.4pc; }
+
+.containers .img-empty-course {
+  width: 20pc; }
