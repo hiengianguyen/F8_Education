@@ -16,7 +16,6 @@ class AuthController {
 
   // [POST] /sign-up
   signUp(req, res) {
-    console.log(req.body)
     try {
       const { fullName, email, password, phoneNumber, role } = req.body;
       User.findOne({ email: email }).then((user) => {
