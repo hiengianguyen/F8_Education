@@ -1,14 +1,33 @@
 <div class="m-4">
+  {{#each courses}}
+  <form id="form-search" class="d-flex justify-content-center" method="GET">
+    <div style="min-width: 40pc;">
+      <div class="d-flex align-items-center">
+        <input
+        type="text"
+        name="keyword"
+        class="form-control p-2"
+        id="search-input"
+        value="{{inputValue}}"
+        placeholder="Nhập tên khoá học cần tìm kiếm"
+      />
+      <a class="nav-link fs-3 text-black ms-3" id="search-courses" href="/search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      </div>
+    </div>
+  </form>
+  {{/each}}
   <div class="row">
     {{#if courses}}
       {{#if (same "teacher" isStudent)}}
-        <h1>
+        <h3>
           Khoá học của bạn
-        </h1>
+        </h3>
         {{else}}
-        <h1>
+        <h3>
           Khoá học đề xuất cho bạn
-        </h1>
+        </h3>
       {{/if}}
     {{/if}}
     {{#each courses}}
@@ -31,7 +50,7 @@
 
       <div class="containers">
         <img class="img-empty-course" src="/img/empty.png" alt="No content" />
-        <h3>Hiện tại vẫn chưa có khoá học nào được tạo!</h3>
+        <h3>Chưa có khoá học nào được tạo!</h3>
         <a
           class="btn bg-success text-white btn-lg mt-2"
           href="/courses/create"
@@ -41,3 +60,11 @@
     {{/each}}
   </div>
 </div>
+
+<script>
+  const formSearch = document.getElementById("form-search");
+  const btnSearch = document.getElementById("search-courses");
+  btnSearch.onclick = () => {
+    formSearch.submit();
+  }
+</script>
