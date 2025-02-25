@@ -82,7 +82,7 @@
     };
 
     // Tải ảnh lên Cloudinary và nhận URL trả về
-    uploadImageToCloudinary(file)
+    uploadImageToCloudinary(file, 'F8_Education')
       .then((imageUrl) => {
         imgProfile.src = imageUrl; 
         hiddenAvatarInput.value = imageUrl;

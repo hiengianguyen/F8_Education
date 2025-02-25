@@ -34,18 +34,13 @@
           </div>
 
           <div class="mb-3 form-group">
-            <label for="image-input" class="form-label">Đường dẫn hình ảnh</label>
-            <input
-              type="text"
-              name="image"
-              rules="required|url"
-              class="form-control login__input"
-              id="image-input"
-            />
-            <span class="form-message"></span>
+            <label for="formFile" class="form-label">Đường dẫn hình ảnh</label>
+            <input class="form-control" type="file" id="formFile">
+            <input id="course-img-input" name="image" type="text" style="display:none" />
           </div>
 
           <div class="mb-3 form-group">
+           
             <label for="videoUrl-input" class="form-label">Đường dẫn video
               (Youtube)</label>
             <input
@@ -62,10 +57,30 @@
       </form>
     </div>
 
+<script src="/uploadImageToCloudinary.js" defer></script>
     <script
       src="/validationForm.js"
       onload="varidator('#create-course-form')"
     ></script>
 
+<script>
+  const inputChooseFileImg = document.getElementById("formFile");
+  const hiddenCourseImgInput = document.getElementById("course-img-input");
+
+  inputChooseFileImg.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    
+
+    // Tải ảnh lên Cloudinary và nhận URL trả về
+    uploadImageToCloudinary(file, 'F8_Education/courses')
+      .then((imageUrl) => {
+        hiddenCourseImgInput.value = imageUrl;
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+        alert('Có lỗi khi tải ảnh lên Cloudinary');
+      });
+  });
+</script>
   </body>
 </html>
