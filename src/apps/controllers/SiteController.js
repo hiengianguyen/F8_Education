@@ -16,6 +16,7 @@ class SiteController {
         case "teacher":
           queryFindCourse = {
             createdBy: req.session.userId,
+            isDeleted: false,
           };
           break;
         default:
