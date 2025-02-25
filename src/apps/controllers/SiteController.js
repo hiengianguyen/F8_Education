@@ -15,7 +15,7 @@ class SiteController {
           break;
         case "teacher":
           queryFindCourse = {
-            createdBy: { $exists: true },
+            createdBy: req.session.userId,
           };
           break;
         default:
@@ -42,7 +42,25 @@ class SiteController {
   // [GET] /search
   search(req, res, next) {
     if (req.session.isLogin) {
-      Course.find({ isDeleted: false })
+      let queryFindCourse;
+      switch (req.session.role) {
+        case "student":
+          queryFindCourse = {
+            isDeleted: false,
+          };
+
+          break;
+        case "teacher":
+          queryFindCourse = {
+            createdBy: req.session.userId,
+          };
+          break;
+        default:
+          queryFindCourse = {
+            isDeleted: false,
+          };
+      }
+      Course.find(queryFindCourse)
         .then((courses) => {
           let filteredCourses = courses;
           if (req.query.keyword) {
