@@ -1,5 +1,5 @@
 <div class="m-4">
-  {{#each courses}}
+  {{#if courses}}
   <form id="form-search" class="d-flex justify-content-center" method="GET">
     <div style="min-width: 40pc;">
       <div class="d-flex align-items-center">
@@ -17,7 +17,7 @@
       </div>
     </div>
   </form>
-  {{/each}}
+  {{/if}}
   <div class="row">
     {{#if courses}}
       {{#if (same "teacher" isStudent)}}
