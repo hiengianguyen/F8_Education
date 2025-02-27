@@ -1,6 +1,7 @@
 const Handlebars = require("handlebars");
 
 module.exports = {
+  not: (a) => !a,
   same: (a, b) => {
     if (b) {
       return a == b;
