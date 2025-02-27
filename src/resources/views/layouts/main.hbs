@@ -32,17 +32,16 @@
       <div class="container-fluid containers-navbar pe-1">
         <a class="navbar-brand" href="/home">F8 Education</a>
         <ul class="navbar-nav">
-          {{#if (same "teacher" isStudent)}}
-            <li class="nav-item">
-              <a class="nav-link" href="/courses/create">Tạo khoá học</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/me/stored/courses">Khóa học của tôi</a>
-            </li>
+          {{#if (not isHomepageWhenNotLogin)}}
+            {{#if (same "teacher" isStudent)}}
+              <li class="nav-item">
+                <a class="nav-link" href="/courses/create">Tạo khoá học</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/me/stored/courses">Khóa học của tôi</a>
+              </li>
+            {{/if}}
           {{/if}}
-          <li class="nav-item">
-            <a class="nav-link" href="/search">Tìm Kiếm</a>
-          </li>
 
         </ul>
         <button
@@ -62,7 +61,7 @@
           id="navbarsExample02"
         >
           <ul class="navbar-nav ml-auto d-flex align-items-center">
-            {{#if isHomepage}}
+            {{#if (not isHomepageWhenNotLogin)}}
               <li class="nav-item">
                 <a
                   href="/auth/sign-out"

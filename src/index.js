@@ -53,8 +53,8 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "until")));
 
 app.use((req, res, next) => {
-  const homePage = ["/", "/auth/sign-in", "/auth/sign-up"];
-  res.locals.isHomepage = !homePage.includes(req.path);
+  const homepageWhenNotLoginRoutes = ["/", "/auth/sign-in", "/auth/sign-up"];
+  res.locals.isHomepageWhenNotLogin = homepageWhenNotLoginRoutes.includes(req.path);
   
   next();
 });
