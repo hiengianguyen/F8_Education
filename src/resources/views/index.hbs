@@ -1,6 +1,6 @@
 <div class="m-4">
   {{#if courses}}
-  <form id="form-search" class="d-flex justify-content-center" method="GET">
+  <form id="form-search" class="d-flex justify-content-center" method="POST" action="/search">
     <div style="min-width: 40pc;">
       <div class="d-flex align-items-center">
         <input
@@ -11,9 +11,10 @@
         value="{{inputValue}}"
         placeholder="Nhập tên khoá học cần tìm kiếm"
       />
-      <a class="nav-link fs-3 text-black ms-3" id="search-courses" href="/search">
+      <input id="courses-input" name="courseSearch" type="text" value="{{courses}}" style="display:none" />
+      <button type="submit" class="nav-link fs-3 text-black ms-3" id="search-courses">
         <i class="fa-solid fa-magnifying-glass"></i>
-      </a>
+      </button>
       </div>
     </div>
   </form>
@@ -64,7 +65,8 @@
 <script>
   const formSearch = document.getElementById("form-search");
   const btnSearch = document.getElementById("search-courses");
-  btnSearch.onclick = () => {
+  btnSearch.onclick = (e) => {
+    e.preventdefault()
     formSearch.submit();
   }
 </script>
