@@ -44,7 +44,7 @@ img.profile-img-user {
   width: 12pc;
   height: 12pc; }
 
-.info p {
+.info-sub p {
   font-size: 18px; }
 
 .profile-user {
@@ -53,8 +53,7 @@ img.profile-img-user {
   padding-bottom: 2pc; }
 
 .profile-dad-name label {
-  font-weight: 600;
-  margin-bottom: 3px; }
+  font-weight: 600; }
 
 .profile-dad-name {
   padding: 0 15pc; }
@@ -65,3 +64,10 @@ img.profile-img-user {
 
 .containers .img-empty-course {
   width: 15pc; }
+
+.course-img-edit {
+  width: 15pc;
+  height: 8pc; }
+
+.form-group label {
+  font-weight: 600; }

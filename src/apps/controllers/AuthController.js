@@ -59,6 +59,7 @@ class AuthController {
             req.session.fullName = user.fullName;
             req.session.avatarUrl = user.avatar;
             req.session.role = user.role;
+            req.session.isSearch = false;
 
             res.redirect("/home");
           } else {
