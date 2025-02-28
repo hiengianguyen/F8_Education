@@ -1,7 +1,11 @@
-<div class="mt-4 container">
-  <form method="POST" action="/courses/{{course._id}}?_method=PUT">
-    <div class="mb-3">
-      <label for="name-course-input" class="form-label">Name Course</label>
+<div class="mt-2 container">
+  <form
+    method="POST"
+    id="edit-course-form"
+    action="/courses/{{course._id}}?_method=PUT"
+  >
+    <div class="mb-2 form-group">
+      <label for="name-course-input" class="form-label">Tên khoá học</label>
       <input
         type="text"
         name="name"
@@ -9,10 +13,11 @@
         class="form-control"
         id="name-course-input"
       />
+      <span class="form-message"></span>
     </div>
 
-    <div class="mb-3">
-      <label for="description-input" class="form-label">Description</label>
+    <div class="mb-2 form-group">
+      <label for="description-input" class="form-label">Mô tả</label>
       <input
         type="text"
         name="description"
@@ -20,18 +25,76 @@
         value="{{course.description}}"
         id="description-input"
       />
+      <span class="form-message"></span>
     </div>
 
-    <div class="mb-3">
-      <label for="vId-input" class="form-label">Video Id</label>
+    <div class="mb-2 form-group">
+      <label for="form-course-img" class="form-label">Hình ảnh khóa học</label>
+      <div class="mb-2">
+        <img
+          class="course-img-edit mt-1"
+          id="course-img"
+          src="{{course.image}}"
+          alt="User"
+        />
+      </div>
+      <input class="form-control" type="file" id="form-course-img" />
+      <input
+        id="course-img-input"
+        name="image"
+        type="text"
+        style="display:none"
+      />
+      <span class="form-message"></span>
+    </div>
+
+    <div class="mb-2 form-group">
+      <label for="videoUrl-input" class="form-label">Đường dẫn video (Youtube)</label>
       <input
         type="text"
-        name="videoId"
-        value="{{course.videoId}}"
-        class="form-control"
-        id="search-input"
+        name="videoUrl"
+        rules="required|urlYoutube"
+        class="form-control login__input"
+        id="videoUrl-input"
+        value="{{course.videoUrl}}"
       />
+      <span class="form-message"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Sửa Khoá Học</button>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Sửa Khoá Học</button>
+    </div>
   </form>
 </div>
+
+<script
+  src="/validationForm.js"
+  onload="varidator('#edit-course-form')"
+></script>
+
+<script src="/uploadImageToCloudinary.js" defer></script>
+<script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+<script>
+  const inputChooseFileImg = document.getElementById("form-course-img");
+  const imgCourse = document.getElementById("course-img");
+  const hiddenCourseInput = document.getElementById("course-img-input");
+
+  inputChooseFileImg.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      imgProfile.src = e.target.result;
+    };
+
+    uploadImageToCloudinary(file, 'F8_Education/courses')
+      .then((imageUrl) => {
+        imgCourse.src = imageUrl; 
+        hiddenCourseInput.value = imageUrl;
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+        alert('Có lỗi khi tải ảnh lên Cloudinary');
+      });
+  });
+</script>

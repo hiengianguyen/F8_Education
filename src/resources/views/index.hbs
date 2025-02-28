@@ -1,34 +1,47 @@
 <div class="m-4">
-  {{#if courses}}
-  <form id="form-search" class="d-flex justify-content-center" method="POST" action="/search">
+  <form
+    id="form-search"
+    class="d-flex justify-content-center"
+    method="POST"
+    action="/search"
+  >
     <div style="min-width: 40pc;">
       <div class="d-flex align-items-center">
         <input
-        type="text"
-        name="keyword"
-        class="form-control p-2"
-        id="search-input"
-        value="{{inputValue}}"
-        placeholder="Nhập tên khoá học cần tìm kiếm"
-      />
-      <input id="courses-input" name="courseSearch" type="text" value="{{courses}}" style="display:none" />
-      <button type="submit" class="nav-link fs-3 text-black ms-3" id="search-courses">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+          type="text"
+          name="keyword"
+          class="form-control p-2"
+          id="search-input"
+          value="{{inputValue}}"
+          placeholder="Nhập tên khoá học cần tìm kiếm"
+        />
+        <input
+          id="courses-input"
+          name="courseSearch"
+          type="text"
+          value="{{courses}}"
+          style="display:none"
+        />
+        <button
+          type="submit"
+          class="nav-link fs-3 text-black ms-3"
+          id="search-courses"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
     </div>
   </form>
-  {{/if}}
   <div class="row">
     {{#if courses}}
       {{#if (same "teacher" isStudent)}}
-        <h3>
+        <h5>
           Khoá học của bạn
-        </h3>
-        {{else}}
-        <h3>
+        </h5>
+      {{else}}
+        <h5>
           Khoá học đề xuất cho bạn
-        </h3>
+        </h5>
       {{/if}}
     {{/if}}
     {{#each courses}}
@@ -48,25 +61,27 @@
         </div>
       </div>
     {{else}}
-
-      <div class="containers">
-        <img class="img-empty-course" src="/img/empty.png" alt="No content" />
-        <h3>Chưa có khoá học nào được tạo!</h3>
-        <a
-          class="btn bg-success text-white btn-lg mt-2"
-          href="/courses/create"
-          role="button"
-        >Tạo khoá học</a>
-      </div>
+      {{#if (same "student" isStudent)}}
+        <div class="containers mt-4">
+          <h6>Không tìm thấy khoá học nào</h6>
+        </div>
+      {{else}}
+        <div class="containers">
+          <img class="img-empty-course" src="/img/empty.png" alt="No content" />
+          <h3>Chưa có khoá học nào được tạo!</h3>
+          <a
+            class="btn bg-success text-white btn-lg mt-2"
+            href="/courses/create"
+            role="button"
+          >Tạo khoá học</a>
+        </div>
+      {{/if}}
     {{/each}}
   </div>
 </div>
 
 <script>
-  const formSearch = document.getElementById("form-search");
-  const btnSearch = document.getElementById("search-courses");
-  btnSearch.onclick = (e) => {
-    e.preventdefault()
-    formSearch.submit();
-  }
+  const formSearch = document.getElementById("form-search"); const btnSearch =
+  document.getElementById("search-courses"); btnSearch.onclick = (e) => {
+  e.preventdefault() formSearch.submit(); }
 </script>
