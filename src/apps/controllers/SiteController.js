@@ -1,88 +1,34 @@
 const Course = require("../models/CourseModel");
-const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
+const { multipleMongooseToObject, mongooseToObject } = require("../../until/mongooseFunctions");
 const { removeVI } = require("jsrmvi");
+const { searchCourses } = require("../../until/searchCourses");
 
 
 class SiteController {
   // [GET] /home
-  index(req, res, next) {
+  async index(req, res, next) {
+    // Return courses with keyword is undefined
+    const courses = await searchCourses(req.session.role, undefined, req.session.userId);
     if (req.session.isLogin) {
-      let queryFindCourse;
-      switch (req.session.role) {
-        case "student":
-          queryFindCourse = {
-            isDeleted: false,
-          };
-
-          break;
-        case "teacher":
-          queryFindCourse = {
-            createdBy: req.session.userId,
-            isDeleted: false,
-          };
-          break;
-        default:
-          queryFindCourse = {
-            isDeleted: false,
-          };
-      }
-
-      if(req.session.courses == undefined || req.session.courses.length === 0) {
-        Course.find(queryFindCourse)
-        .then((courses) => {
           res.render("index", {
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
             avatar: req.session.avatarUrl,
             isStudent: req.session.role,
           });
-        })
-        .catch(next);
-      } else {
-        res.render("index", {
-          courses: req.session.courses,
-          fullName: req.session.fullName,
-          avatar: req.session.avatarUrl,
-          isStudent: req.session.role,
-        });
-      }
+          console.log( await searchCourses(req.session.role, undefined));
+      
     } else {
       res.redirect("/");
     }
   }
 
   // [POST] /search
-  search(req, res, next) {
-    let queryFindCourse;
-    switch (req.session.role) {
-      case "student":
-        queryFindCourse = {
-          isDeleted: false,
-        };
-        break;
-      case "teacher":
-        queryFindCourse = {
-          createdBy: req.session.userId,
-          isDeleted: false,
-        };
-        break;
-      default:
-        queryFindCourse = {
-          isDeleted: false,
-        };
-    }
-    let coursesList;
-    const keyword = req.body.keyword.toLowerCase().trim();
-    Course.find(queryFindCourse)
-      .then((courses) => {
-        coursesList = courses.filter(
-          (course) =>
-            course.name.toLowerCase().includes(keyword) ||
-            course.slug.includes(keyword)
-        );
-        req.session.courses = coursesList;
-        res.redirect("/home")
-      })
+  async search(req, res, next) {
+    let coursesList = await searchCourses(req.session.role, req.body.keyword, req.session.userId);
+
+    console.log(coursesList)
+      
           
   }
 }
