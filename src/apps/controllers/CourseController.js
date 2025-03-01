@@ -2,7 +2,6 @@ const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
 const { mongooseToObject, multipleMongooseToObject } = require("../../until/mongooseFunctions");
-const { removeVI } = require("jsrmvi");
 const { nanoid } = require("nanoid");
 
 class CourseController {
