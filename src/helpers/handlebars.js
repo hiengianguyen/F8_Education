@@ -1,12 +1,8 @@
 const Handlebars = require("handlebars");
 
 module.exports = {
-  not: (a) => {
-    return !a;
-  },
-  same: (a, b) => {
-    return a == b;
-  },
+  not: (a) => !a,
+  same: (a, b) => a == b,
   and: (a, b) => a && b,
   sum: (a, b) => a + b,
   sortable: (field, sort) => {
