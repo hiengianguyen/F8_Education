@@ -23,15 +23,9 @@
         <h6>Danh sách bài học:</h6>
         <div class="list-group">
           {{#each lessons}}
-            {{#if (same @index 0)}}
-              <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
-                Bài {{this.order}}. {{this.name}}
-              </button>
-            {{else}}
-              <button type="button" class="list-group-item list-group-item-action" aria-current="true">
-                Bài {{this.order}}. {{this.name}}
-              </button>
-            {{/if}}
+            <button type="button" value="{{this._id}}" class="list-group-item list-group-item-action" aria-current="true">
+              Bài {{this.order}}. {{this.name}}
+            </button>
           {{/each}}
         </div>
       </div>
@@ -40,9 +34,15 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const listGroup = document.getElementsByClassName('list-group');
+    const lessonBtnHidForm = document.getElementById('form-hid-btn-lesson');
     const lessonList = document.getElementById('lesson-list');
     const buttons = lessonList.getElementsByClassName('list-group-item');
-    console.log(buttons);
+    const currentUrl = window.location.origin + window.location.pathname;
+
+    const queryString = window.location.search;
+    const urlQueries = new URLSearchParams(queryString);
+    const currentQuery = urlQueries.get('current');
 
     for (let button of buttons) {
       button.addEventListener('click', function () {
@@ -50,8 +50,21 @@
           btn.classList.remove('active');
         }
         this.classList.add('active');
+        const detailCourseLessonUrl = `${currentUrl}?current=${this.value}`;
+        window.location.href = detailCourseLessonUrl;
       });
     }
+
+    if(!currentQuery) {
+      buttons[0].classList.add('active');
+    } else {
+      for (let button of buttons) {
+        if (button.value === currentQuery) {
+          button.classList.add('active');
+        }
+      }
+    }
+    
   });
   
 </script>
