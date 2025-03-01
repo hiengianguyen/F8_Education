@@ -1,9 +1,4 @@
-const Course = require("../models/CourseModel");
-const {
-  multipleMongooseToObject,
-  mongooseToObject,
-} = require("../../until/mongooseFunctions");
-const { removeVI } = require("jsrmvi");
+const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 const { searchCourses } = require("../../until/searchCourses");
 
 class SiteController {
@@ -27,7 +22,7 @@ class SiteController {
       res.redirect("/");
     }
   }
-
+  
   // [POST] /search
   async search(req, res, next) {
     let coursesList = await searchCourses(

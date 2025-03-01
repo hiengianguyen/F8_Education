@@ -1,15 +1,57 @@
-<div class="mt-4 containers">
-  <h5 class="mb-6">{{course.name}}</h5>
-  <iframe
-    width="560"
-    class="my-4"
-    height="315"
-    src="https://www.youtube.com/embed/{{course.videoId}}"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen
-  ></iframe>
-  <p>{{course.description}}</p>
+<div class="row content-lession">
+  <div class="col-sm-8  ms-4">
+      <div class="d-flex align-items-center mt-2">
+        <h5 class="mb-0">{{course.name}}</h5>
+        <p class="m-0 ms-2 course-description">{{currentLesson.name}}</p>
+      </div>
+    <div>
+      <iframe
+        width="100%"
+        class="my-2"
+        height="430"
+        src="https://www.youtube.com/embed/{{currentLesson.videoId}}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+  <div class="col mt-2 pe-2">
+      <div id="lesson-list">
+        <h6>Danh sách bài học:</h6>
+        <div class="list-group">
+          {{#each lessons}}
+            {{#if (same @index 0)}}
+              <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                Bài {{this.order}}. {{this.name}}
+              </button>
+            {{else}}
+              <button type="button" class="list-group-item list-group-item-action" aria-current="true">
+                Bài {{this.order}}. {{this.name}}
+              </button>
+            {{/if}}
+          {{/each}}
+        </div>
+      </div>
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const lessonList = document.getElementById('lesson-list');
+    const buttons = lessonList.getElementsByClassName('list-group-item');
+    console.log(buttons);
+
+    for (let button of buttons) {
+      button.addEventListener('click', function () {
+        for (let btn of buttons) {
+          btn.classList.remove('active');
+        }
+        this.classList.add('active');
+      });
+    }
+  });
+  
+</script>
