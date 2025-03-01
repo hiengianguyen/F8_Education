@@ -1,22 +1,32 @@
 const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
-const { mongooseToObject, multipleMongooseToObject } = require("../../until/mongooseFunctions");
+const {
+  mongooseToObject,
+  multipleMongooseToObject,
+} = require("../../until/mongooseFunctions");
 const { nanoid } = require("nanoid");
 
 class CourseController {
   // [GET] /courses/:slug
   async show(req, res, next) {
-    let detailCourse = await Course.findOne({ slug: req.params.slug })
-      .then((course) =>  course)
+    const detailCourse = await Course.findOne({ slug: req.params.slug })
+      .then((course) => course)
       .catch((err) => next(err));
 
-    const lessons = await Lesson.find({ courseId: detailCourse._id }).sort('order')
-        .then((lessons) => lessons)
-        .catch((err) => next(err));
-    
-    const currentLesson = lessons.find((lesson) => lesson.order === 1);
-      
+    const lessons = await Lesson.find({ courseId: detailCourse._id })
+      .sort("order")
+      .then((lessons) => lessons)
+      .catch((err) => next(err));
+
+    let currentLesson;
+    const currentLessonId = req.query.current;
+    if (currentLessonId) {
+      currentLesson = lessons.find((lesson) => lesson._id == currentLessonId);
+    } else {
+      currentLesson = lessons.find((lesson) => lesson.order == 1);
+    }
+
     return res.render("courses/show", {
       course: mongooseToObject(detailCourse),
       lessons: multipleMongooseToObject(lessons),
@@ -25,7 +35,7 @@ class CourseController {
       fullName: req.session.fullName,
       avatar: req.session.avatarUrl,
       isStudent: req.session.role,
-    })
+    });
   }
 
   // [GET] /courses/create
