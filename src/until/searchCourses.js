@@ -22,9 +22,7 @@ function searchCourses(userId, role, keyword) {
 
   if (keyword === undefined) {
     return CourseModel.find(queryFindCourse)
-      .then((courses) => {
-        return courses;
-      })
+      .then((courses) => courses)
       .catch((err) => {
         console.log(err);
         return [];
