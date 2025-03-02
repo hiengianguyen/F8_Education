@@ -4,6 +4,10 @@
     id="edit-course-form"
     action="/courses/{{course._id}}?_method=PUT"
   >
+
+  <div class="d-flex justify-content-end">
+    <a href="/courses/{{course._id}}/edit/lessons" class="a-edit-lesson">Chỉnh sửa bài học</a>
+  </div>
     <div class="mb-2 form-group">
       <label for="name-course-input" class="form-label">Tên khoá học</label>
       <input

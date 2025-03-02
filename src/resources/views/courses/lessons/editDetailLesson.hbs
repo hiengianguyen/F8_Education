@@ -1,0 +1,59 @@
+<div class="title-edit-lesson ps-4 pt-2">
+    <h5>Chỉnh sửa bài học: {{currentLesson.name}}</h5>
+    <h5>Khóa học: {{course.name}}</h5>
+</div>
+
+<div class="mt-2 container">
+  <form id="edit-lesson-form" method="POST">
+    <div class="contact-form">
+      <div class="mb-2 form-group">
+        <label for="name-input" class="form-label">Tên bài học</label>
+        <input
+          type="text"
+          name="name"
+          rules="required|min:5"
+          class="form-control login__input"
+          id="name-input"
+          value="{{currentLesson.name}}"
+        />
+        <span class="form-message"></span>
+      </div>
+
+      <div class="mb-2 form-group">
+        <label for="videoUrl-input" class="form-label">Đường dẫn video
+          (Youtube)</label>
+        <input
+          type="text"
+          name="videoUrl"
+          rules="required|urlYoutube"
+          class="form-control login__input"
+          id="videoUrl-input"
+          value="{{currentLesson.videoUrl}}"
+        />
+        <span class="form-message"></span>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary">Cập nhật bài học</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script
+  src="/validationForm.js"
+  onload="varidator('#edit-lesson-form')"
+></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const formEditLesson = document.getElementById('edit-lesson-form');
+        const buttonSubmitEditLesson = formEditLesson.querySelector('button');
+
+        buttonSubmitEditLesson.addEventListener("click", () => {
+            currentUpdateLessonUrl = currentUrl;
+            formEditLesson.action = currentUpdateLessonUrl;
+            console.log(formEditLesson.action);
+            //formEditLesson.submit();
+        })
+    });
+</script>
