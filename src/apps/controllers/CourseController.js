@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
@@ -64,9 +65,9 @@ class CourseController {
       .catch((err) => next(err));
   }
 
-  // [GET] /courses/:id/edit
+  // [GET] /courses/:courseId/edit
   edit(req, res, next) {
-    Course.findById(req.params.id)
+    Course.findById(req.params.courseId)
       .then((course) => {
         res.render("courses/edit", {
           course: mongooseToObject(course),
@@ -78,23 +79,23 @@ class CourseController {
       .catch(next);
   }
 
-  // [PUT] /courses/:id
+  // [PUT] /courses/:courseId
   update(req, res, next) {
-    Course.updateOne({ _id: req.params.id }, req.body)
+    Course.updateOne({ _id: req.params.courseId }, req.body)
       .then(() => res.redirect("/me/stored/courses"))
       .catch((err) => next(err));
   }
 
-  // [DELETE] /courses/:id
+  // [DELETE] /courses/:courseId
   softDelete(req, res, next) {
-    Course.updateOne({ _id: req.params.id }, { $set: { isDeleted: true } })
+    Course.updateOne({ _id: req.params.courseId }, { $set: { isDeleted: true } })
       .then(() => res.redirect("back"))
       .catch(next);
   }
 
-  // [PATCH] /courses/:id/restore
+  // [PATCH] /courses/:courseId/restore
   restore(req, res, next) {
-    Course.updateOne({ _id: req.params.id }, { $set: { isDeleted: false } })
+    Course.updateOne({ _id: req.params.courseId }, { $set: { isDeleted: false } })
       .then(() => res.redirect("back"))
       .catch(next);
   }
@@ -128,11 +129,57 @@ class CourseController {
         res.json({ message: "Action is invalid" });
     }
   }
-  // [DELETE] /courses/:id
+  // [DELETE] /courses/:courseId
   hardDelete(req, res, next) {
-    Course.deleteOne({ _id: req.params.id })
+    Course.deleteOne({ _id: req.params.courseId })
       .then(() => res.redirect("back"))
       .catch(next);
+  }
+
+  // [GET] /courses/:courseId/edit/lessons
+  async showEditListLessons(req, res) {
+    const courseId = req.params.courseId;
+    
+    const course = await Course.findOne({ _id: new mongoose.Types.ObjectId(courseId) })
+      .then((course) => course)
+      .catch((err) => next(err));
+
+    const lessons = await Lesson.find({ courseId: course._id })
+      .sort("order")
+      .then((lessons) => lessons)
+      .catch((err) => next(err));
+    
+    res.render("courses/lessons/editListLessons", {
+      course: mongooseToObject(course),
+      lessons: multipleMongooseToObject(lessons),
+    });
+  }
+
+  // [GET] /courses/:courseId/edit/lessons/:lessonId
+  async showEditDetailLesson(req, res) {
+    const courseId = req.params.courseId;
+    const course = await Course.findOne({ _id: new mongoose.Types.ObjectId(courseId) })
+      .then((course) => course)
+      .catch((err) => next(err));
+
+    const lessonId = req.params.lessonId;
+    const currentLesson = await Lesson.findOne
+      ({ _id: new mongoose.Types.ObjectId(lessonId) })
+      .then((lesson) => lesson)
+      .catch((err) => next(err));
+
+    res.render("courses/lessons/editDetailLesson", {
+      course: mongooseToObject(course),
+      currentLesson: mongooseToObject(currentLesson),
+    });
+  }
+
+  async updateLesson(req, res, next) {
+    const formData = req.body;
+    formData.videoId = splitGetID(req.body.videoUrl);
+    const editListLessonsUrl = "/courses" + req.path.split("lessons/")[0] + "lessons";
+    await Lesson.updateOne({ _id: req.params.lessonId }, formData)
+      .then(() => res.redirect(editListLessonsUrl))
   }
 }
 

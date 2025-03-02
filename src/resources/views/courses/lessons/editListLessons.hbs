@@ -1,0 +1,43 @@
+<div class="edit-list-lessons pt-4">
+    <h5 class="ms-4">
+        Chỉnh sửa khóa học: {{course.name}}
+    </h5>
+
+    <div class="d-flex justify-content-center">
+        <div class="list-group" id="edit-list-lessons">
+            {{#each lessons}}
+                <div class="d-flex align-items-center">
+                    <button type="button" value="{{this._id}}" class="list-group-item list-group-item-action me-2 btn-edit-list-lessons" aria-current="true">
+                        Bài {{this.order}}. {{this.name}}
+                    </button>
+                    <button class="nav-link btn-icon-edit" value="{{this._id}}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const lessonList = document.getElementById('edit-list-lessons');
+        const buttons = lessonList.getElementsByClassName('btn-edit-list-lessons');
+        const editIconButtons = lessonList.getElementsByClassName('btn-icon-edit');
+        const currentUrl = window.location.origin + window.location.pathname;
+        
+        for (let button of buttons) {
+            button.addEventListener('click', function () {
+                const editDetailLessonUrl = `${currentUrl}/${this.value}`;
+                window.location.href = editDetailLessonUrl;
+            });
+        }
+
+        for (let editIconButton of editIconButtons) {
+            editIconButton.addEventListener('click', function () {
+                const editDetailLessonUrl = `${currentUrl}/${this.value}`;
+                window.location.href = editDetailLessonUrl;
+            });
+        }
+    });
+</script>
