@@ -107,3 +107,13 @@ img.profile-img-user {
 .btn-icon-edit {
   text-decoration: none;
 }
+
+.list-lessons {
+  height: 420px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.list-lessons::-webkit-scrollbar {
+  display: none;
+}
