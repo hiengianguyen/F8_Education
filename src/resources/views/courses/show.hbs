@@ -5,7 +5,11 @@
         <h5 class="mb-0">{{course.name}}</h5>
       </div>
     <div class="video-lesson-none d-flex justify-content-center align-items-center mt-4">
-      <h3>Chưa có bài học nào được tạo <a href="/courses/{{course._id}}/edit/lessons/add?currentOrder=0">Tạo bài học mới ở đây</a></h3>
+      <h3>Chưa có bài học nào được tạo 
+        {{#if (same "teacher" isStudent)}}
+          <a href="/courses/{{course._id}}/edit/lessons/add?currentOrder=0">Tạo bài học mới ở đây</a>
+        {{/if}}
+      </h3>
 
     </div>
   </div>

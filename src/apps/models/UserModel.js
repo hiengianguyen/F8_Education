@@ -9,7 +9,7 @@ const userSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "https://res.cloudinary.com/dwd3gdhpf/image/upload/v1740319980/F8_Education/dr9e0bxhmn9wjc40ddrf.webp",
+        "https://res.cloudinary.com/dwd3gdhpf/image/upload/v1741012862/F8_Education/users/r4le9elower1u3fihj5g.avif",
     },
     password: { type: String },
     role: { type: String },
