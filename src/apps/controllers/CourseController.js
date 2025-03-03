@@ -144,7 +144,7 @@ class CourseController {
       .then((course) => course)
       .catch((err) => next(err));
 
-    const lessons = await Lesson.find({ courseId: course._id })
+    const lessons = await Lesson.find({ courseId: course._id, isDeleted: false })
       .sort("order")
       .then((lessons) => lessons)
       .catch((err) => next(err));
@@ -152,6 +152,7 @@ class CourseController {
     res.render("courses/lessons/editListLessons", {
       course: mongooseToObject(course),
       lessons: multipleMongooseToObject(lessons),
+      lessonsCount: lessons.length,
     });
   }
 
@@ -175,11 +176,45 @@ class CourseController {
   }
 
   async updateLesson(req, res, next) {
-    const formData = req.body;
-    formData.videoId = splitGetID(req.body.videoUrl);
-    const editListLessonsUrl = "/courses" + req.path.split("lessons/")[0] + "lessons";
-    await Lesson.updateOne({ _id: req.params.lessonId }, formData)
-      .then(() => res.redirect(editListLessonsUrl))
+    try {
+      const formData = req.body;
+      formData.videoId = splitGetID(req.body.videoUrl);
+      const editListLessonsUrl = "/courses" + req.path.split("lessons/")[0] + "lessons";
+      await Lesson.updateOne({ _id: req.params.lessonId }, formData);
+      res.redirect(editListLessonsUrl);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // [GET] /courses/:courseId/edit/lessons/add
+  async showCreateLesson(req, res) {
+    const courseId = req.params.courseId;
+    const currentOrder = Number(req.query.currentOrder) + 1;
+    const course = await Course.findOne({
+      _id: new mongoose.Types.ObjectId(courseId),
+    })
+      .then((course) => course)
+
+    res.render("courses/lessons/createDetailLesson", {
+      currentOrder: currentOrder,
+      course: mongooseToObject(course),
+    });
+  }
+
+  // [POST] /courses/:courseId/edit/lessons/add
+  async createLesson(req, res, next) {
+    try {
+      const formData = req.body;
+      formData.courseId = new mongoose.Types.ObjectId(req.params.courseId);
+      formData.order = Number(req.query.currentOrder) + 1;
+      formData.videoId = splitGetID(req.body.videoUrl);
+      const lesson = new Lesson(formData);
+      await Lesson.insertMany([lesson]);
+      res.redirect(`/courses/${req.params.courseId}/edit/lessons`);
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

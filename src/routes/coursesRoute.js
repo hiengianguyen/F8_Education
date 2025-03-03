@@ -12,6 +12,8 @@ router.delete("/:courseId", CourseController.softDelete);
 router.delete("/:courseId/delete", CourseController.hardDelete);
 router.get("/:slug", CourseController.show);
 router.get("/:courseId/edit/lessons", CourseController.showEditListLessons);
+router.get("/:courseId/edit/lessons/add", CourseController.showCreateLesson);
+router.post("/:courseId/edit/lessons/add", CourseController.createLesson);
 router.get("/:courseId/edit/lessons/:lessonId", CourseController.showEditDetailLesson);
 router.post("/:courseId/edit/lessons/:lessonId", CourseController.updateLesson);
 
