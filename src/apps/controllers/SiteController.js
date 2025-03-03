@@ -31,7 +31,7 @@ class SiteController {
       req.body.keyword
     );
     req.session.customData = coursesList;
-    res.redirect("/search/result");
+    res.redirect(`/search/result?keyword=${req.body.keyword}`);
   }
 
   // [GET] /search/result
@@ -42,7 +42,7 @@ class SiteController {
       res.render("index", {
         courses: courses,
         isSearch: false,
-        keyword: req.body.keyword,
+        keyword: req.query.keyword,
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
         isStudent: req.session.role,
