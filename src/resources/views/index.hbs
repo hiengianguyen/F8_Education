@@ -31,45 +31,80 @@
         <h5>
           Khoá học của bạn
         </h5>
+        {{#each courses}}
+          <div
+            class="card course-card"
+            style="width: 18rem; margin: 10px; padding: 0"
+          >
+            <a href="/courses/{{this.slug}}">
+              <img
+                src="{{this.image}}"
+                class="card-img-top"
+                alt="{{this.name}}"
+              />
+            </a>
+            <div class="card-body">
+              <a href="/courses/{{this.slug}}">
+                <h5 class="card-title">{{this.name}}</h5>
+              </a>
+              <p class="card-text">{{this.description}}</p>
+              <a
+                href="/courses/{{this.slug}}"
+                class="btn btn-primary mt-auto"
+              >Truy cập</a>
+            </div>
+          </div>
+        {{else}}
+            <div class="containers">
+              <img
+                class="img-empty-course"
+                src="/img/empty.png"
+                alt="No content"
+              />
+              <h3>Chưa có khoá học nào được tạo!</h3>
+              <a
+                class="btn bg-success text-white btn-lg mt-2"
+                href="/courses/create"
+                role="button"
+              >Tạo khoá học</a>
+            </div>
+        {{/each}}
       {{else}}
         <h5>
           Khoá học đề xuất cho bạn
         </h5>
+
+        {{#each courses}}
+          <div
+            class="card course-card"
+            style="width: 18rem; margin: 10px; padding: 0"
+          >
+            <a href="/courses/{{this.slug}}">
+              <img
+                src="{{this.image}}"
+                class="card-img-top"
+                alt="{{this.name}}"
+              />
+            </a>
+            <div class="card-body">
+              <a href="/courses/{{this.slug}}">
+                <h5 class="card-title">{{this.name}}</h5>
+              </a>
+              <p class="card-text">{{this.description}}</p>
+              <a
+                href="/courses/{{this.slug}}"
+                class="btn btn-primary mt-auto"
+              >Đăng ký</a>
+            </div>
+          </div>
+        {{else}}
+            <div class="containers mt-4">
+              <h6>Không tìm thấy khoá học nào</h6>
+            </div>
+        {{/each}}
       {{/if}}
     {{/if}}
-    {{#each courses}}
-      <div
-        class="card course-card"
-        style="width: 18rem; margin: 10px; padding: 0"
-      >
-        <a href="/courses/{{this.slug}}">
-          <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}" />
-        </a>
-        <div class="card-body">
-          <a href="/courses/{{this.slug}}">
-            <h5 class="card-title">{{this.name}}</h5>
-          </a>
-          <p class="card-text">{{this.description}}</p>
-          <a href="/courses/{{this.slug}}" class="btn btn-primary mt-auto">Đăng Ký</a>
-        </div>
-      </div>
-    {{else}}
-    {{#if (same "student" isStudent)}}
-      <div class="containers mt-4">
-        <h6>Không tìm thấy khoá học nào</h6>
-      </div>
-    {{else}}
-      <div class="containers">
-        <img class="img-empty-course" src="/img/empty.png" alt="No content" />
-        <h3>Chưa có khoá học nào được tạo!</h3>
-        <a
-          class="btn bg-success text-white btn-lg mt-2"
-          href="/courses/create"
-          role="button"
-        >Tạo khoá học</a>
-      </div>
-    {{/if}}
-    {{/each}}
+
   </div>
 </div>
 
