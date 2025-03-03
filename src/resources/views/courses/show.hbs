@@ -4,54 +4,62 @@
       <div class="d-flex align-items-center mt-2">
         <h5 class="mb-0">{{course.name}}</h5>
       </div>
-    <div class="video-lesson-none d-flex justify-content-center align-items-center mt-4">
-      <h3>Chưa có bài học nào được tạo 
-        {{#if (same "teacher" isStudent)}}
-          <a href="/courses/{{course._id}}/edit/lessons/add?currentOrder=0">Tạo bài học mới ở đây</a>
-        {{/if}}
-      </h3>
-
+      <div
+        class="video-lesson-none d-flex justify-content-center align-items-center mt-4"
+      >
+        <h3>Chưa có bài học nào được tạo
+          {{#if (same "teacher" isStudent)}}
+            <a
+              href="/courses/{{course._id}}/edit/lessons/add?currentOrder=0"
+            >Tạo bài học mới ở đây</a>
+          {{/if}}
+        </h3>
+      </div>
     </div>
-  </div>
-  <div class="col mt-4 pe-2">
+    <div class="col mt-4 pe-2">
       <div id="lesson-list">
         <h5>Chưa có bài học nào được tạo</h5>
       </div>
-  </div>
-  
+    </div>
   {{else}}
-
-  <div class="col-sm-8 ms-4">
+    <div class="col-sm-8 ms-4">
       <div class="d-flex align-items-center mt-2">
         <h5 class="mb-0">{{course.name}}</h5>
         <p class="m-0 ms-2 course-description">{{currentLesson.name}}</p>
       </div>
-    <div class="mt-2">
-      <iframe
-        width="100%"
-        class="my-2"
-        height="600"
-        src="https://www.youtube.com/embed/{{currentLesson.videoId}}"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
+      <div class="mt-2">
+        <iframe
+          width="100%"
+          class="my-2"
+          height="600"
+          src="https://www.youtube.com/embed/{{currentLesson.videoId}}"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
     </div>
-  </div>
-  <div class="col mt-2 pe-0">
+    <div class="col mt-2 pe-0">
       <div id="lesson-list">
         <h6>Danh sách bài học:</h6>
         <div class="list-group list-lessons-container">
           {{#each lessons}}
-            <button type="button" value="{{this._id}}" class="list-group-item list-group-item-action" aria-current="true">
-              Bài {{this.order}}. {{this.name}}
+            <button
+              type="button"
+              value="{{this._id}}"
+              class="list-group-item list-group-item-action"
+              aria-current="true"
+            >
+              Bài
+              {{this.order}}.
+              {{this.name}}
             </button>
           {{/each}}
         </div>
       </div>
-  </div>
+    </div>
   {{/if}}
 </div>
 
@@ -87,7 +95,6 @@
         }
       }
     }
-    
   });
   
 </script>
