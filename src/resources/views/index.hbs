@@ -54,21 +54,21 @@
         </div>
       </div>
     {{else}}
-      {{#if (same "student" isStudent)}}
-        <div class="containers mt-4">
-          <h6>Không tìm thấy khoá học nào</h6>
-        </div>
-      {{else}}
-        <div class="containers">
-          <img class="img-empty-course" src="/img/empty.png" alt="No content" />
-          <h3>Chưa có khoá học nào được tạo!</h3>
-          <a
-            class="btn bg-success text-white btn-lg mt-2"
-            href="/courses/create"
-            role="button"
-          >Tạo khoá học</a>
-        </div>
-      {{/if}}
+    {{#if (same "student" isStudent)}}
+      <div class="containers mt-4">
+        <h6>Không tìm thấy khoá học nào</h6>
+      </div>
+    {{else}}
+      <div class="containers">
+        <img class="img-empty-course" src="/img/empty.png" alt="No content" />
+        <h3>Chưa có khoá học nào được tạo!</h3>
+        <a
+          class="btn bg-success text-white btn-lg mt-2"
+          href="/courses/create"
+          role="button"
+        >Tạo khoá học</a>
+      </div>
+    {{/if}}
     {{/each}}
   </div>
 </div>
