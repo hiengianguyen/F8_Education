@@ -4,7 +4,6 @@ const {
   mongooseToObject,
   multipleMongooseToObject,
 } = require("../../until/mongooseFunctions");
-const mongoose = require('mongoose');
 
 class MeController {
   showProfile(req, res, next) {
@@ -70,8 +69,7 @@ class MeController {
     if (req.session.isLogin) {
       Promise.all([
         Course.find({
-          //createdBy: req.session.userId,
-          createdBy: new mongoose.Types.ObjectId("67c326a5d6fb694b7a196ff8"),
+          createdBy: req.session.userId,
           isDeleted: false,
         }).sortable(req),
         Course.countDocuments({

@@ -2,10 +2,22 @@
 
 .card.course-card {
   margin-bottom: 16px;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.card.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px #0000001a;
 }
 
 .col-des {
   text-align: center;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .card-body a {
@@ -116,4 +128,16 @@ img.profile-img-user {
 
 .list-lessons::-webkit-scrollbar {
   display: none;
+}
+
+.video-lesson-none {
+  width: 100%;
+  height: 430px;
+  background-color: #ccc;
+}
+
+.list-lessons-container {
+  height: 630px;
+  overflow: hidden;
+  overflow-y: auto;
 }
