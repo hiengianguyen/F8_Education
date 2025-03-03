@@ -7,6 +7,7 @@ const {
   multipleMongooseToObject,
 } = require("../../until/mongooseFunctions");
 const { nanoid } = require("nanoid");
+const { removeVI } = require("jsrmvi");
 
 class CourseController {
   // [GET] /courses/:slug
@@ -20,23 +21,33 @@ class CourseController {
       .then((lessons) => lessons)
       .catch((err) => next(err));
 
-    let currentLesson;
-    const currentLessonId = req.query.current;
-    if (currentLessonId) {
-      currentLesson = lessons.find((lesson) => lesson._id == currentLessonId);
+    if( lessons.length === 0 ) {
+      return res.render("courses/show", {
+        course: mongooseToObject(detailCourse),
+        isDontHaveLesson: true,
+        fullName: req.session.fullName,
+        avatar: req.session.avatarUrl,
+        isStudent: req.session.role,
+      });
     } else {
-      currentLesson = lessons.find((lesson) => lesson.order == 1);
-    }
+      let currentLesson;
+      const currentLessonId = req.query.current;
+      if (currentLessonId) {
+        currentLesson = lessons.find((lesson) => lesson._id == currentLessonId);
+      } else {
+        currentLesson = lessons.find((lesson) => lesson.order == 1);
+      }
 
-    return res.render("courses/show", {
-      course: mongooseToObject(detailCourse),
-      lessons: multipleMongooseToObject(lessons),
-      currentLesson: currentLesson.toObject(),
-      currentLessonOrder: currentLesson.order,
-      fullName: req.session.fullName,
-      avatar: req.session.avatarUrl,
-      isStudent: req.session.role,
-    });
+      return res.render("courses/show", {
+        course: mongooseToObject(detailCourse),
+        lessons: multipleMongooseToObject(lessons),
+        currentLesson: currentLesson.toObject(),
+        isDontHaveLesson: false,
+        fullName: req.session.fullName,
+        avatar: req.session.avatarUrl,
+        isStudent: req.session.role,
+      });
+    }
   }
 
   // [GET] /courses/create
@@ -153,6 +164,9 @@ class CourseController {
       course: mongooseToObject(course),
       lessons: multipleMongooseToObject(lessons),
       lessonsCount: lessons.length,
+      fullName: req.session.fullName,
+      avatar: req.session.avatarUrl,
+      isStudent: req.session.role,
     });
   }
 
@@ -172,6 +186,9 @@ class CourseController {
     res.render("courses/lessons/editDetailLesson", {
       course: mongooseToObject(course),
       currentLesson: mongooseToObject(currentLesson),
+      fullName: req.session.fullName,
+      avatar: req.session.avatarUrl,
+      isStudent: req.session.role,
     });
   }
 
@@ -199,6 +216,9 @@ class CourseController {
     res.render("courses/lessons/createDetailLesson", {
       currentOrder: currentOrder,
       course: mongooseToObject(course),
+      fullName: req.session.fullName,
+      avatar: req.session.avatarUrl,
+      isStudent: req.session.role,
     });
   }
 

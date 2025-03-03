@@ -7,8 +7,6 @@ const Course = new Schema(
     name: { type: String },
     description: { type: String },
     image: { type: String },
-    videoUrl: { type: String },
-    videoId: { type: String },
     slug: { type: String },
     isDeleted: { type: Boolean, default: false },
     createdBy: { type: Object },
