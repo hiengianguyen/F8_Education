@@ -22,7 +22,7 @@ class SiteController {
       res.redirect("/");
     }
   }
-  
+
   // [POST] /search
   async search(req, res, next) {
     let coursesList = await searchCourses(

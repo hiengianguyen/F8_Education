@@ -5,9 +5,10 @@
     action="/courses/{{course._id}}?_method=PUT"
   >
 
-  <div class="d-flex justify-content-end">
-    <a href="/courses/{{course._id}}/edit/lessons" class="a-edit-lesson">Chỉnh sửa bài học</a>
-  </div>
+    <div class="d-flex justify-content-end">
+      <a href="/courses/{{course._id}}/edit/lessons" class="a-edit-lesson">Chỉnh
+        sửa bài học</a>
+    </div>
     <div class="mb-2 form-group">
       <label for="name-course-input" class="form-label">Tên khoá học</label>
       <input
@@ -69,26 +70,14 @@
 <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
 
 <script>
-  const inputChooseFileImg = document.getElementById("form-course-img");
-  const imgCourse = document.getElementById("course-img");
-  const hiddenCourseInput = document.getElementById("course-img-input");
-
-  inputChooseFileImg.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      imgProfile.src = e.target.result;
-    };
-
-    uploadImageToCloudinary(file, 'F8_Education/courses')
-      .then((imageUrl) => {
-        imgCourse.src = imageUrl; 
-        hiddenCourseInput.value = imageUrl;
-      })
-      .catch((error) => {
-        console.error('Error uploading image:', error);
-        alert('Có lỗi khi tải ảnh lên Cloudinary');
-      });
-  });
+  const inputChooseFileImg = document.getElementById("form-course-img"); const
+  imgCourse = document.getElementById("course-img"); const hiddenCourseInput =
+  document.getElementById("course-img-input");
+  inputChooseFileImg.addEventListener("change", (event) => { const file =
+  event.target.files[0]; const reader = new FileReader(); reader.onload =
+  function (e) { imgProfile.src = e.target.result; };
+  uploadImageToCloudinary(file, 'F8_Education/courses') .then((imageUrl) => {
+  imgCourse.src = imageUrl; hiddenCourseInput.value = imageUrl; })
+  .catch((error) => { console.error('Error uploading image:', error); alert('Có
+  lỗi khi tải ảnh lên Cloudinary'); }); });
 </script>
