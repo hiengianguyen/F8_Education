@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
@@ -21,7 +21,7 @@ class CourseController {
       .then((lessons) => lessons)
       .catch((err) => next(err));
 
-    if( lessons.length === 0 ) {
+    if (lessons.length === 0) {
       return res.render("courses/show", {
         course: mongooseToObject(detailCourse),
         isDontHaveLesson: true,
@@ -99,14 +99,20 @@ class CourseController {
 
   // [DELETE] /courses/:courseId
   softDelete(req, res, next) {
-    Course.updateOne({ _id: req.params.courseId }, { $set: { isDeleted: true } })
+    Course.updateOne(
+      { _id: req.params.courseId },
+      { $set: { isDeleted: true } }
+    )
       .then(() => res.redirect("back"))
       .catch(next);
   }
 
   // [PATCH] /courses/:courseId/restore
   restore(req, res, next) {
-    Course.updateOne({ _id: req.params.courseId }, { $set: { isDeleted: false } })
+    Course.updateOne(
+      { _id: req.params.courseId },
+      { $set: { isDeleted: false } }
+    )
       .then(() => res.redirect("back"))
       .catch(next);
   }
@@ -150,16 +156,21 @@ class CourseController {
   // [GET] /courses/:courseId/edit/lessons
   async showEditListLessons(req, res) {
     const courseId = req.params.courseId;
-    
-    const course = await Course.findOne({ _id: new mongoose.Types.ObjectId(courseId) })
+
+    const course = await Course.findOne({
+      _id: new mongoose.Types.ObjectId(courseId),
+    })
       .then((course) => course)
       .catch((err) => next(err));
 
-    const lessons = await Lesson.find({ courseId: course._id, isDeleted: false })
+    const lessons = await Lesson.find({
+      courseId: course._id,
+      isDeleted: false,
+    })
       .sort("order")
       .then((lessons) => lessons)
       .catch((err) => next(err));
-    
+
     res.render("courses/lessons/editListLessons", {
       course: mongooseToObject(course),
       lessons: multipleMongooseToObject(lessons),
@@ -173,13 +184,16 @@ class CourseController {
   // [GET] /courses/:courseId/edit/lessons/:lessonId
   async showEditDetailLesson(req, res) {
     const courseId = req.params.courseId;
-    const course = await Course.findOne({ _id: new mongoose.Types.ObjectId(courseId) })
+    const course = await Course.findOne({
+      _id: new mongoose.Types.ObjectId(courseId),
+    })
       .then((course) => course)
       .catch((err) => next(err));
 
     const lessonId = req.params.lessonId;
-    const currentLesson = await Lesson.findOne
-      ({ _id: new mongoose.Types.ObjectId(lessonId) })
+    const currentLesson = await Lesson.findOne({
+      _id: new mongoose.Types.ObjectId(lessonId),
+    })
       .then((lesson) => lesson)
       .catch((err) => next(err));
 
@@ -196,7 +210,8 @@ class CourseController {
     try {
       const formData = req.body;
       formData.videoId = splitGetID(req.body.videoUrl);
-      const editListLessonsUrl = "/courses" + req.path.split("lessons/")[0] + "lessons";
+      const editListLessonsUrl =
+        "/courses" + req.path.split("lessons/")[0] + "lessons";
       await Lesson.updateOne({ _id: req.params.lessonId }, formData);
       res.redirect(editListLessonsUrl);
     } catch (err) {
@@ -210,8 +225,7 @@ class CourseController {
     const currentOrder = Number(req.query.currentOrder) + 1;
     const course = await Course.findOne({
       _id: new mongoose.Types.ObjectId(courseId),
-    })
-      .then((course) => course)
+    }).then((course) => course);
 
     res.render("courses/lessons/createDetailLesson", {
       currentOrder: currentOrder,
