@@ -12,6 +12,7 @@
       <label for="name-course-input" class="form-label">Tên khoá học</label>
       <input
         type="text"
+        rules="required|min:5"
         name="name"
         value="{{course.name}}"
         class="form-control"
@@ -24,6 +25,7 @@
       <label for="description-input" class="form-label">Mô tả</label>
       <input
         type="text"
+        rules="required|min:10"
         name="description"
         class="form-control"
         value="{{course.description}}"
