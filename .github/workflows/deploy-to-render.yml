@@ -20,5 +20,6 @@ jobs:
           api_key: ${{ secrets.RENDER_API_KEY }}
           clear_cache: true
           wait_deploy: true
+          github_deployment: true
           deployment_environment: "production"
           github_token: ${{ secrets.GH_PAT }}
