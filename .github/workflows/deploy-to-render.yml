@@ -3,7 +3,7 @@ name: Deploy project to Render
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy-to-render:
