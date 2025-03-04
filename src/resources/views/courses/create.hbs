@@ -33,6 +33,7 @@
             id="course-img"
             src="/img/default-course.png"
             alt="User"
+            style="display: none;"
           />
         </div>
         <input class="form-control" type="file" id="formFile" required />
@@ -63,16 +64,16 @@
   const hiddenCourseImgInput = document.getElementById("course-img-input");
 
   inputChooseFileImg.addEventListener("change", (event) => { 
-  const file = event.target.files[0]; 
-
-  uploadImageToCloudinary(file, 'F8_Education/courses') 
-    .then((imageUrl) => { 
-      courseImg.src = imageUrl;
-      hiddenCourseImgInput.value = imageUrl; 
-    }) 
-    .catch((error) => {
-      console.error('Error uploading image:', error); 
-      alert('Có lỗi khi tải ảnh lên Cloudinary'); 
+    const file = event.target.files[0]; 
+    uploadImageToCloudinary(file, 'F8_Education/courses')
+      .then((imageUrl) => { 
+        courseImg.src = imageUrl;
+        courseImg.style.display = "block"; 
+        hiddenCourseImgInput.value = imageUrl;
+        }) 
+      .catch((error) => {
+         console.error('Error uploading image:', error); 
+         alert('Có lỗi khi tải ảnh lên Cloudinary');
     }); 
   });
 </script>
