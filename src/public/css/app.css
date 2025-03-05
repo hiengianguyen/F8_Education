@@ -108,3 +108,7 @@ img.profile-img-user {
   height: 630px;
   overflow: hidden;
   overflow-y: auto; }
+
+.card-img-top {
+  width: 286px;
+  height: 161px; }
