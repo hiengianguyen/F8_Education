@@ -16,5 +16,6 @@ router.get("/:courseId/edit/lessons/add", CourseController.showCreateLesson);
 router.post("/:courseId/edit/lessons/add", CourseController.createLesson);
 router.get("/:courseId/edit/lessons/:lessonId", CourseController.showEditDetailLesson);
 router.post("/:courseId/edit/lessons/:lessonId", CourseController.updateLesson);
+router.get("/:courseId/register", CourseController.registerCourse);
 
 module.exports = router;

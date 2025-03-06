@@ -29,7 +29,6 @@ Course.query.sortable = function (req) {
 
 // Add plugin
 Course.plugin(mongooseDelete, {
-  deletedAt: true,
   overrideMethods: true,
 });
 
