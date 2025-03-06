@@ -1,5 +1,6 @@
 const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 const { searchCourses } = require("../../until/searchCourses");
+const RegisteredCourse = require("../models/RegisteredCourseModel");
 
 class SiteController {
   // [GET] /home
@@ -51,6 +52,8 @@ class SiteController {
       res.redirect("/");
     }
   }
+
+
 }
 
 module.exports = new SiteController();

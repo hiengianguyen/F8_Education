@@ -6,6 +6,7 @@ function searchCourses(userId, role, keyword) {
     case "student":
       queryFindCourse = {
         isDeleted: false,
+        
       };
       break;
     case "teacher":

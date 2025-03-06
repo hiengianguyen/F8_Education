@@ -8,6 +8,8 @@ const {
 } = require("../../until/mongooseFunctions");
 const { nanoid } = require("nanoid");
 const { removeVI } = require("jsrmvi");
+const RegisteredCourse = require("../models/RegisteredCourseModel");
+
 
 class CourseController {
   // [GET] /courses/:slug
@@ -249,6 +251,24 @@ class CourseController {
     } catch (err) {
       next(err);
     }
+  }
+
+  // [GET] /courses/:courseId/register
+  async registerCourse(req, res, next) {
+    const courseId = new mongoose.Types.ObjectId(req.params.courseId);
+    const userId = new mongoose.Types.ObjectId(req.session.userId);
+    
+    const course = await RegisteredCourse.findOne({ userId: userId, courseId: courseId, isDeleted: false });
+    
+    if (!course) {
+      const registeredCourse = new RegisteredCourse({
+        courseId: courseId,
+        userId: userId,
+      });
+      await registeredCourse.save()
+    }
+    
+    return res.redirect("/home");
   }
 }
 

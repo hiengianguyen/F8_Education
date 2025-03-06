@@ -25,6 +25,11 @@
       </div>
     </div>
   </form>
+
+  {{#if registeredCourses}}
+    <h5 class="my-4">Khoá học đã đăng ký</h5>
+  {{/if}}
+
   <div class="row">
     {{#if courses}}
       {{#if (same "teacher" isStudent)}}
@@ -54,7 +59,7 @@
           {{#if (same "teacher" ../isStudent)}}
             <a href="/courses/{{this.slug}}" class="btn btn-primary mt-auto">Truy cập</a>
           {{else}}
-            <a href="/courses/{{this.slug}}" class="btn btn-primary mt-auto">Đăng Ký</a>
+            <button value="{{this._id}}" class="btn btn-primary mt-auto btn-register-course">Đăng Ký</button>
           {{/if}}
           
         </div>
@@ -80,11 +85,25 @@
 </div>
 </div>
 
+<form id="form-hidden-register"></form>
+
 <script>
   const formSearch = document.getElementById("form-search"); 
+  const formRegister = document.getElementById("form-hidden-register"); 
   const btnSearch = document.getElementById("search-courses");
-   
+  const btnRegisterCourses = document.querySelectorAll(".btn-register-course");
+
   btnSearch.onclick = (e) => {
-    e.preventdefault() formSearch.submit(); 
+    e.preventdefault();
+    formSearch.submit(); 
   }
+
+  Array.from(btnRegisterCourses).forEach((btn) => {
+    btn.onclick = (e) => {
+      e.preventDefault();
+      const courseId = e.target.value;
+      formRegister.action = "/courses/"+ courseId +"/register";
+      formRegister.submit();
+    };
+  });
 </script>
