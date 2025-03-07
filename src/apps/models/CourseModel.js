@@ -9,6 +9,7 @@ const Course = new Schema(
     image: { type: String },
     slug: { type: String },
     isDeleted: { type: Boolean, default: false },
+    deletedAt: { type: Date },
     createdBy: { type: Object },
   },
   {

@@ -1,19 +1,28 @@
+const mongoose = require("mongoose");
+const Course = require("../models/CourseModel");
+const RegisteredCourse = require("../models/RegisteredCourseModel");
 const { multipleMongooseToObject } = require("../../until/mongooseFunctions");
 const { searchCourses } = require("../../until/searchCourses");
-const RegisteredCourse = require("../models/RegisteredCourseModel");
 
 class SiteController {
   // [GET] /home
+  
   async index(req, res, next) {
-    // Return courses with keyword is undefined
-    const courses = await searchCourses(
-      req.session.userId,
-      req.session.role,
-      undefined
-    );
     if (req.session.isLogin) {
+      let userRegisteredCourses, registeredCourseIds;
+      const registeredCourses = await RegisteredCourse.find({userId: new mongoose.Types.ObjectId(req.session.userId)})
+      if (registeredCourses) {
+        registeredCourseIds = registeredCourses.map((registeredCourse) => registeredCourse.courseId);
+        const userRegisteredCoursesArr = await Course.find({ _id: { $in: registeredCourseIds } })
+        userRegisteredCourses = userRegisteredCoursesArr;
+      } else {
+        userRegisteredCourses = [];
+      }
+      const nonRegisteredCourses = await Course.find({ _id: { $nin: registeredCourseIds } })
+
       res.render("index", {
-        courses: multipleMongooseToObject(courses),
+        courses: multipleMongooseToObject(nonRegisteredCourses),
+        registeredCourse: multipleMongooseToObject(userRegisteredCourses),
         isSearch: req.session.isSearch,
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
@@ -52,8 +61,6 @@ class SiteController {
       res.redirect("/");
     }
   }
-
-
 }
 
 module.exports = new SiteController();
