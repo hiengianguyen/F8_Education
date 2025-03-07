@@ -1,0 +1,141 @@
+<form class="m-4" name="container-form" method="POST" action="/courses/handle-method-course">
+    <div class="d-flex justify-content-between title-store">
+      <h5>Khóa học đã đăng ký</h5>
+    </div>
+    <div class="mt-2 d-flex checkbox-all-course justify-content-center">
+      <div class="mt-16 form-check">
+        <input type="checkbox" class="form-check-input" id="checkbox-all">
+        <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
+      </div>
+      <select class="form-select mb-2 select-method-course" aria-label="Default select example" name="action" required>
+          <option selected value="">-- Phương thức --</option>
+          <option value="softDelete">Hủy đăng ký</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sumbit-method" disabled>Thực hiện</button>
+      </div>
+    <div class="row">
+      <div class="col-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" colspan="2">#</th>
+                <th scope="col">Tên khóa học {{{sortable "name" _sort}}}</th>
+                </th>
+                <th scope="col">Mô tả {{{sortable "description" _sort}}}</th>
+                <th scope="col" colspan="2">Đăng ký lúc {{{sortable "updatedAt" _sort}}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each registeredCourse}}
+            <tr>
+                <td>
+                  <div class="mt-16 form-check">
+                    <input type="checkbox" class="form-check-input" name="courseIds[]" value="{{this._id}}">
+                  </div>
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{convertToVietnameseDateTime this.updatedAt}}</td>
+                <td>
+                    <a class="btn btn-danger btn-unregister" data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-course-modal">Hủy đăng ký</a>
+                </td>  
+            </tr>
+
+            {{else}}
+              <tr class="text-center">  
+                <td colspan="5">Chưa đăng ký khóa học nào
+                  <a href="/home">Đăng ký khoá học</a>
+                  </td>
+              </tr>
+            {{/each}}
+            </tbody>
+        </table>
+      </div>
+    </div>
+</form>
+
+<div id="delete-course-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog mt-5">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Hủy đăng ký Khoá Học</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có muốn hủy đăng ký khóa học này?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-unregister-course" type="button" class="btn btn-danger">Hủy đăng ký</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quay lại</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <form id="form-hid-unregister" method="POST" action="/me/registered/courses?_method=DELETE">
+    <input type="text" style="display: none;" name="userId" value="{{userId}}">
+    <input type="text" id="input-courseId" style="display: none;" name="courseId" value="">
+  </form>
+<script>
+const exampleModal = document.getElementById('delete-course-modal')
+
+if (exampleModal) {
+    const btnUnRegisters = document.getElementsByClassName("btn-unregister")
+    const inputCourseId = document.getElementById("input-courseId")
+    var courseId;
+
+    Array.from(btnUnRegisters).forEach((btnUnRegister) => {
+        btnUnRegister.onclick = () => {
+          inputCourseId.value = btnUnRegister.getAttribute('data-bs-id');
+        }
+    })
+
+    exampleModal.addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget
+      courseId = button.getAttribute('data-bs-id');
+      const btnUnRegisterCourse = document.getElementById("btn-unregister-course")
+      const unRegisterForm = document.getElementById("form-hid-unregister")
+
+      btnUnRegisterCourse.onclick = () => {
+          unRegisterForm.submit();   
+      }
+    })
+  /*
+
+  var checkboxAll = $("#checkbox-all")
+  var courseItemcheckbox = $("input[name='courseIds[]']")
+  var submitMethodBtn = $(".btn-sumbit-method")
+  var formContainer = document.forms["container-form"]
+
+  checkboxAll.change(function() {
+    var isChecked = $(this).prop('checked')
+    courseItemcheckbox.prop('checked', isChecked)
+    checkSelectedCourse()
+  })
+
+  courseItemcheckbox.change(function() {
+    var isAllChecked = courseItemcheckbox.length === courseItemcheckbox.filter(':checked').length
+    checkboxAll.prop('checked', isAllChecked)
+    checkSelectedCourse()
+  })
+
+  function checkSelectedCourse() {
+    var selectedCourseCount = $("input[name='courseIds[]']:checked").length
+    if (selectedCourseCount) {
+      submitMethodBtn.removeAttr("disabled")
+    } else {
+      submitMethodBtn.attr("disabled", "disabled")
+    }
+  }
+  
+  submitMethodBtn.on("submit", function(e) {
+    var isSubmitable = !$(this).hasClass("disabled")
+
+    if(!isSubmitable) {
+     e.preventDefault();
+    }
+  })
+  */
+}
+
+</script>

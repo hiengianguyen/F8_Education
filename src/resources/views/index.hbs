@@ -26,23 +26,10 @@
     </div>
   </form>
 
-  {{#if registeredCourses}}
-    <h5 class="my-4">Khoá học đã đăng ký</h5>
-  {{/if}}
-
-  <div class="row">
-    {{#if courses}}
-      {{#if (same "teacher" isStudent)}}
-        <h5>
-          Khoá học của bạn
-        </h5>
-      {{else}}
-        <h5>
-          Khoá học đề xuất cho bạn
-        </h5>
-      {{/if}}
-    {{/if}}
-    {{#each courses}}
+    <h5 class="mt-4">Khoá học đã đăng ký</h5>
+  {{#if registeredCourse}}
+    <div class="row">
+    {{#each registeredCourse}}
       <div
         class="card course-card"
         style="width: 18rem; margin: 10px; padding: 0"
@@ -55,9 +42,44 @@
             <h5 class="card-title">{{this.name}}</h5>
           </a>
           <p class="card-text">{{this.description}}</p>
+          <a href="/courses/{{this.slug}}" class="btn bg-success mt-auto text-white">Truy cập</a>
+        </div>
+      </div>
+    {{/each}}
+    </div>
+
+    {{else}}
+    <div class="containers mt-4">
+      <h6>Chưa đăng ký khoá học nào</h6>
+    </div>
+  {{/if}}
+
+  <div class="row">
+    {{#if (same "teacher" isStudent)}}
+      <h5>
+        Khoá học của bạn
+      </h5>
+    {{else}}
+      <h5>
+        Khoá học đề xuất cho bạn
+      </h5>
+    {{/if}}
+    {{#each courses}}
+      <div
+        class="card course-card"
+        style="width: 18rem; margin: 10px; padding: 0"
+      >
+        <a href="/courses/{{this._id}}/register">
+          <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}" />
+        </a>
+        <div class="card-body">
+          <a href="/courses/{{this._id}}/register">
+            <h5 class="card-title">{{this.name}}</h5>
+          </a>
+          <p class="card-text">{{this.description}}</p>
 
           {{#if (same "teacher" ../isStudent)}}
-            <a href="/courses/{{this.slug}}" class="btn btn-primary mt-auto">Truy cập</a>
+            <a href="/courses/{{this.slug}}" class="btn bg-success text-white mt-auto">Truy cập</a>
           {{else}}
             <button value="{{this._id}}" class="btn btn-primary mt-auto btn-register-course">Đăng Ký</button>
           {{/if}}

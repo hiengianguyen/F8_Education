@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
+const RegisteredCourse = require("../models/RegisteredCourseModel");
 const splitGetID = require("../../until/extractVideoIdFromUrl");
 const {
   mongooseToObject,
@@ -8,7 +9,6 @@ const {
 } = require("../../until/mongooseFunctions");
 const { nanoid } = require("nanoid");
 const { removeVI } = require("jsrmvi");
-const RegisteredCourse = require("../models/RegisteredCourseModel");
 
 
 class CourseController {
@@ -103,7 +103,7 @@ class CourseController {
   softDelete(req, res, next) {
     Course.updateOne(
       { _id: req.params.courseId },
-      { $set: { isDeleted: true } }
+      { $set: { isDeleted: true, deletedAt: new Date()} },
     )
       .then(() => res.redirect("back"))
       .catch(next);

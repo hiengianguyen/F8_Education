@@ -1,5 +1,7 @@
+const mongoose = require("mongoose");
 const Course = require("../models/CourseModel");
 const User = require("../models/UserModel");
+const RegisteredCourse = require("../models/RegisteredCourseModel");
 const {
   mongooseToObject,
   multipleMongooseToObject,
@@ -104,6 +106,32 @@ class MeController {
         });
       })
       .catch(next);
+  }
+
+  async registeredCourses(req, res, next) {
+    if (req.session.isLogin) {
+      let userRegisteredCourses, registeredCourseIds;
+      const registeredCourses = await RegisteredCourse.find({userId: new mongoose.Types.ObjectId(req.session.userId)})
+      if (registeredCourses) {
+        registeredCourseIds = registeredCourses.map((registeredCourse) => registeredCourse.courseId);
+        const userRegisteredCoursesArr = await Course.find({ _id: { $in: registeredCourseIds } })
+        userRegisteredCourses = userRegisteredCoursesArr;
+      } else {
+        userRegisteredCourses = [];
+      }
+
+      return res.render("me/registered-courses", {
+        registeredCourse: multipleMongooseToObject(userRegisteredCourses),
+        userId: req.session.userId
+      })
+    }
+  }
+
+  deleteRegisteredCourses(req, res, next) {
+    console.log(req.body)
+    // RegisteredCourse.deleteOne({ userId: , courseId:  })
+    //       .then(() => res.redirect("back"))
+    //       .catch(next);
   }
 }
 

@@ -7,6 +7,7 @@ const RegisteredCourse = new Schema(
     courseId: { type: Object },
     userId: { type: Object },
     isDeleted: { type: Boolean, default: false },
+    createdAt: { type: Date }
   },
   {
     timestamps: true,
