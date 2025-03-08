@@ -10,12 +10,12 @@ module.exports = {
     const icons = {
       default: "fa-solid fa-sort",
       asc: "fa-solid fa-arrow-down-short-wide",
-      desc: "fa-solid fa-arrow-down-wide-short",
+      desc: "fa-solid fa-arrow-down-wide-short"
     };
     const types = {
       default: "desc",
       asc: "desc",
-      desc: "asc",
+      desc: "asc"
     };
     const icon = icons[sortType];
     const type = types[sortType];
@@ -39,12 +39,12 @@ module.exports = {
       year: "numeric", // Full year
       hour: "2-digit", // Hour in 2-digit format
       minute: "2-digit", // Minute in 2-digit format
-      hour12: true, // 12-hour format (AM/PM)
+      hour12: true // 12-hour format (AM/PM)
     });
 
     const [time, period, date] = vietnameseDateTime.split(" ");
     const formattedDateTime = `${date} ${time} ${period}`;
 
     return formattedDateTime;
-  },
+  }
 };

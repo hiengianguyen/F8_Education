@@ -18,7 +18,7 @@ db.connect();
 
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: true
   })
 );
 
@@ -39,7 +39,7 @@ app.use(
     secret: "your_secret_key",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // Set to true if using HTTPS
+    cookie: { secure: false } // Set to true if using HTTPS
   })
 );
 
@@ -50,11 +50,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, "until")));
+app.use(express.static(path.join(__dirname, "utils")));
 
 app.use((req, res, next) => {
   const homepageWhenNotLoginRoutes = ["/", "/auth/sign-in", "/auth/sign-up"];
-  res.locals.isHomepageWhenNotLogin = homepageWhenNotLoginRoutes.includes(req.path);
+  res.locals.isHomepageWhenNotLogin = homepageWhenNotLoginRoutes.includes(
+    req.path
+  );
   next();
 });
 
@@ -66,7 +68,7 @@ app.engine(
   "hbs",
   handlebars.engine({
     extname: ".hbs",
-    helpers: require("./helpers/handlebars"),
+    helpers: require("./helpers/handlebars")
   })
 );
 

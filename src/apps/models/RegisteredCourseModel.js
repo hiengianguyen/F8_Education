@@ -10,13 +10,17 @@ const RegisteredCourse = new Schema(
     createdAt: { type: Date }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
 // Add plugin
 RegisteredCourse.plugin(mongooseDelete, {
-  overrideMethods: true,
+  overrideMethods: true
 });
 
-module.exports = mongoose.model("RegisteredCourse", RegisteredCourse, "registeredCourses");
+module.exports = mongoose.model(
+  "RegisteredCourse",
+  RegisteredCourse,
+  "registeredCourses"
+);

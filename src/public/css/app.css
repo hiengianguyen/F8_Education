@@ -1,6 +1,6 @@
 .card.course-card {
   margin-bottom: 16px;
-  transition: transform .2s, box-shadow .2s; }
+  transition: transform 0.2s, box-shadow 0.2s; }
 
 .card.course-card:hover {
   transform: translateY(-7px);
@@ -112,3 +112,9 @@ img.profile-img-user {
 .card-img-top {
   width: 286px;
   height: 161px; }
+
+.ivalid span {
+  color: red; }
+
+.ivalid .login__input {
+  border: 1px solid red; }

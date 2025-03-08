@@ -4,8 +4,8 @@ const User = require("../models/UserModel");
 const RegisteredCourse = require("../models/RegisteredCourseModel");
 const {
   mongooseToObject,
-  multipleMongooseToObject,
-} = require("../../until/mongooseFunctions");
+  multipleMongooseToObject
+} = require("../../utils/mongooseFunctions");
 
 class MeController {
   showProfile(req, res, next) {
@@ -16,7 +16,7 @@ class MeController {
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
         isStudent: req.session.role,
-        role: user.role == "student" ? "Người Học" : "Người Dạy",
+        role: user.role == "student" ? "Người Học" : "Người Dạy"
       });
     });
   }
@@ -28,7 +28,7 @@ class MeController {
         user: mongooseToObject(user),
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
-        isStudent: req.session.role,
+        isStudent: req.session.role
       });
     });
   }
@@ -52,7 +52,7 @@ class MeController {
               res.locals.isProfile = false;
               res.render("me/edit-profile", {
                 user: req.body,
-                messageEmailInput: "Email vừa nhập đã tồn tại!",
+                messageEmailInput: "Email vừa nhập đã tồn tại!"
               });
             }
           });
@@ -72,12 +72,12 @@ class MeController {
       Promise.all([
         Course.find({
           createdBy: req.session.userId,
-          isDeleted: false,
+          isDeleted: false
         }).sortable(req),
         Course.countDocuments({
           createdBy: req.session.userId,
-          isDeleted: true,
-        }),
+          isDeleted: true
+        })
       ])
         .then(([courses, deleteCount]) => {
           res.render("me/stored-courses", {
@@ -85,7 +85,7 @@ class MeController {
             courses: multipleMongooseToObject(courses),
             fullName: req.session.fullName,
             avatar: req.session.avatarUrl,
-            isStudent: req.session.role,
+            isStudent: req.session.role
           });
         })
         .catch(next);
@@ -102,19 +102,26 @@ class MeController {
           courses: multipleMongooseToObject(courses),
           fullName: req.session.fullName,
           avatar: req.session.avatarUrl,
-          isStudent: req.session.role,
+          isStudent: req.session.role
         });
       })
       .catch(next);
   }
 
+  // [GET] /me/registered/courses
   async registeredCourses(req, res, next) {
     if (req.session.isLogin) {
       let userRegisteredCourses, registeredCourseIds;
-      const registeredCourses = await RegisteredCourse.find({userId: new mongoose.Types.ObjectId(req.session.userId)})
+      const registeredCourses = await RegisteredCourse.find({
+        userId: new mongoose.Types.ObjectId(req.session.userId)
+      });
       if (registeredCourses) {
-        registeredCourseIds = registeredCourses.map((registeredCourse) => registeredCourse.courseId);
-        const userRegisteredCoursesArr = await Course.find({ _id: { $in: registeredCourseIds } })
+        registeredCourseIds = registeredCourses.map(
+          (registeredCourse) => registeredCourse.courseId
+        );
+        const userRegisteredCoursesArr = await Course.find({
+          _id: { $in: registeredCourseIds }
+        });
         userRegisteredCourses = userRegisteredCoursesArr;
       } else {
         userRegisteredCourses = [];
@@ -122,16 +129,33 @@ class MeController {
 
       return res.render("me/registered-courses", {
         registeredCourse: multipleMongooseToObject(userRegisteredCourses),
-        userId: req.session.userId
-      })
+        userId: req.session.userId,
+        fullName: req.session.fullName,
+        avatar: req.session.avatarUrl
+      });
     }
   }
 
-  deleteRegisteredCourses(req, res, next) {
-    console.log(req.body)
-    // RegisteredCourse.deleteOne({ userId: , courseId:  })
-    //       .then(() => res.redirect("back"))
-    //       .catch(next);
+  async deleteRegisteredCourses(req, res, next) {
+    const courseId = new mongoose.Types.ObjectId(req.body.courseId);
+    const userId = new mongoose.Types.ObjectId(req.body.userId);
+
+    await RegisteredCourse.deleteOne({ userId: userId, courseId: courseId });
+    return res.redirect("/me/registered/courses");
+  }
+
+  // [POST] /me/handle-method-register
+  async handleMethodRegister(req, res, next) {
+    if (req.body.action === "unRegister") {
+      const courseIds = req.body.courseIds.map(
+        (courseId) => new mongoose.Types.ObjectId(courseId)
+      );
+      await RegisteredCourse.deleteMany({
+        courseId: { $in: courseIds },
+        userId: new mongoose.Types.ObjectId(req.body.userId)
+      });
+      return res.redirect("/me/registered/courses");
+    }
   }
 }
 

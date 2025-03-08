@@ -9,17 +9,17 @@ const Lesson = new Schema(
     videoId: { type: String },
     order: { type: Number, default: 1 },
     isDeleted: { type: Boolean, default: false },
-    courseId: { type: Object },
+    courseId: { type: Object }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
 // Add plugin
 Lesson.plugin(mongooseDelete, {
   deletedAt: true,
-  overrideMethods: true,
+  overrideMethods: true
 });
 
 module.exports = mongoose.model("Lesson", Lesson);
