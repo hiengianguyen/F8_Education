@@ -1,4 +1,4 @@
-const { mongooseToObject } = require("../../until/mongooseFunctions");
+const { mongooseToObject } = require("../../utils/mongooseFunctions");
 const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const Handlebars = require("handlebars");
@@ -27,7 +27,7 @@ class AuthController {
             email,
             phoneNumber,
             role,
-            password: hashPassword,
+            password: hashPassword
           });
           user.save();
           res.redirect("/auth/sign-in");
@@ -36,7 +36,7 @@ class AuthController {
             fullNameInput: fullName,
             emailInput: email,
             phoneNumberInput: phoneNumber,
-            messageEmailInput: "Email vừa nhập đã tồn tại!",
+            messageEmailInput: "Email vừa nhập đã tồn tại!"
           });
         }
       });
@@ -65,13 +65,13 @@ class AuthController {
           } else {
             res.render("auth/sign-in", {
               valueEmailInput: email,
-              messagePassInput: "Mật khẩu vừa nhập không đúng!",
+              messagePassInput: "Mật khẩu vừa nhập không đúng!"
             });
           }
         } else {
           res.render("auth/sign-in", {
             valueEmailInput: email,
-            messageEmailInput: "Email vừa nhập không tồn tại!",
+            messageEmailInput: "Email vừa nhập không tồn tại!"
           });
         }
       })

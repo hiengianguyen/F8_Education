@@ -5,18 +5,18 @@ function searchCourses(userId, role, keyword) {
   switch (role) {
     case "student":
       queryFindCourse = {
-        isDeleted: false,
+        isDeleted: false
       };
       break;
     case "teacher":
       queryFindCourse = {
         createdBy: userId,
-        isDeleted: false,
+        isDeleted: false
       };
       break;
     default:
       queryFindCourse = {
-        isDeleted: false,
+        isDeleted: false
       };
   }
 

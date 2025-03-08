@@ -2,14 +2,13 @@ const mongoose = require("mongoose");
 const Course = require("../models/CourseModel");
 const Lesson = require("../models/LessonModel");
 const RegisteredCourse = require("../models/RegisteredCourseModel");
-const splitGetID = require("../../until/extractVideoIdFromUrl");
+const splitGetID = require("../../utils/extractVideoIdFromUrl");
 const {
   mongooseToObject,
-  multipleMongooseToObject,
-} = require("../../until/mongooseFunctions");
+  multipleMongooseToObject
+} = require("../../utils/mongooseFunctions");
 const { nanoid } = require("nanoid");
 const { removeVI } = require("jsrmvi");
-
 
 class CourseController {
   // [GET] /courses/:slug
@@ -29,7 +28,7 @@ class CourseController {
         isDontHaveLesson: true,
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
-        isStudent: req.session.role,
+        isStudent: req.session.role
       });
     } else {
       let currentLesson;
@@ -47,7 +46,7 @@ class CourseController {
         isDontHaveLesson: false,
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
-        isStudent: req.session.role,
+        isStudent: req.session.role
       });
     }
   }
@@ -58,7 +57,7 @@ class CourseController {
       res.render("courses/create", {
         fullName: req.session.fullName,
         avatar: req.session.avatarUrl,
-        isStudent: req.session.role,
+        isStudent: req.session.role
       });
     } else {
       res.redirect("/");
@@ -86,7 +85,7 @@ class CourseController {
           course: mongooseToObject(course),
           fullName: req.session.fullName,
           avatar: req.session.avatarUrl,
-          isStudent: req.session.role,
+          isStudent: req.session.role
         });
       })
       .catch(next);
@@ -103,7 +102,7 @@ class CourseController {
   softDelete(req, res, next) {
     Course.updateOne(
       { _id: req.params.courseId },
-      { $set: { isDeleted: true, deletedAt: new Date()} },
+      { $set: { isDeleted: true, deletedAt: new Date() } }
     )
       .then(() => res.redirect("back"))
       .catch(next);
@@ -148,6 +147,7 @@ class CourseController {
         res.json({ message: "Action is invalid" });
     }
   }
+
   // [DELETE] /courses/:courseId
   hardDelete(req, res, next) {
     Course.deleteOne({ _id: req.params.courseId })
@@ -160,14 +160,14 @@ class CourseController {
     const courseId = req.params.courseId;
 
     const course = await Course.findOne({
-      _id: new mongoose.Types.ObjectId(courseId),
+      _id: new mongoose.Types.ObjectId(courseId)
     })
       .then((course) => course)
       .catch((err) => next(err));
 
     const lessons = await Lesson.find({
       courseId: course._id,
-      isDeleted: false,
+      isDeleted: false
     })
       .sort("order")
       .then((lessons) => lessons)
@@ -179,7 +179,7 @@ class CourseController {
       lessonsCount: lessons.length,
       fullName: req.session.fullName,
       avatar: req.session.avatarUrl,
-      isStudent: req.session.role,
+      isStudent: req.session.role
     });
   }
 
@@ -187,14 +187,14 @@ class CourseController {
   async showEditDetailLesson(req, res) {
     const courseId = req.params.courseId;
     const course = await Course.findOne({
-      _id: new mongoose.Types.ObjectId(courseId),
+      _id: new mongoose.Types.ObjectId(courseId)
     })
       .then((course) => course)
       .catch((err) => next(err));
 
     const lessonId = req.params.lessonId;
     const currentLesson = await Lesson.findOne({
-      _id: new mongoose.Types.ObjectId(lessonId),
+      _id: new mongoose.Types.ObjectId(lessonId)
     })
       .then((lesson) => lesson)
       .catch((err) => next(err));
@@ -204,7 +204,7 @@ class CourseController {
       currentLesson: mongooseToObject(currentLesson),
       fullName: req.session.fullName,
       avatar: req.session.avatarUrl,
-      isStudent: req.session.role,
+      isStudent: req.session.role
     });
   }
 
@@ -226,7 +226,7 @@ class CourseController {
     const courseId = req.params.courseId;
     const currentOrder = Number(req.query.currentOrder) + 1;
     const course = await Course.findOne({
-      _id: new mongoose.Types.ObjectId(courseId),
+      _id: new mongoose.Types.ObjectId(courseId)
     }).then((course) => course);
 
     res.render("courses/lessons/createDetailLesson", {
@@ -234,7 +234,7 @@ class CourseController {
       course: mongooseToObject(course),
       fullName: req.session.fullName,
       avatar: req.session.avatarUrl,
-      isStudent: req.session.role,
+      isStudent: req.session.role
     });
   }
 
@@ -257,17 +257,21 @@ class CourseController {
   async registerCourse(req, res, next) {
     const courseId = new mongoose.Types.ObjectId(req.params.courseId);
     const userId = new mongoose.Types.ObjectId(req.session.userId);
-    
-    const course = await RegisteredCourse.findOne({ userId: userId, courseId: courseId, isDeleted: false });
-    
+
+    const course = await RegisteredCourse.findOne({
+      userId: userId,
+      courseId: courseId,
+      isDeleted: false
+    });
+
     if (!course) {
       const registeredCourse = new RegisteredCourse({
         courseId: courseId,
-        userId: userId,
+        userId: userId
       });
-      await registeredCourse.save()
+      await registeredCourse.save();
     }
-    
+
     return res.redirect("/home");
   }
 }

@@ -10,10 +10,10 @@ const Course = new Schema(
     slug: { type: String },
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date },
-    createdBy: { type: Object },
+    createdBy: { type: Object }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
@@ -22,7 +22,7 @@ Course.query.sortable = function (req) {
   if (req.query.hasOwnProperty("_sort")) {
     const isValidType = ["asc", "desc"].includes(req.query.type);
     return this.sort({
-      [req.query.column]: isValidType ? req.query.type : "desc",
+      [req.query.column]: isValidType ? req.query.type : "desc"
     });
   }
   return this;
@@ -30,7 +30,7 @@ Course.query.sortable = function (req) {
 
 // Add plugin
 Course.plugin(mongooseDelete, {
-  overrideMethods: true,
+  overrideMethods: true
 });
 
 module.exports = mongoose.model("Course", Course);

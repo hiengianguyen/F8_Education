@@ -11,7 +11,7 @@ function uploadImageToCloudinary(file, foder) {
 
       fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
         method: "POST",
-        body: formData,
+        body: formData
       })
         .then((response) => response.json())
         .then((data) => {

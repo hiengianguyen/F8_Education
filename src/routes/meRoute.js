@@ -9,5 +9,6 @@ router.get("/stored/courses", MeController.storedCourses);
 router.get("/registered/courses", MeController.registeredCourses);
 router.delete("/registered/courses", MeController.deleteRegisteredCourses);
 router.get("/trash/courses", MeController.trashCourses);
+router.post("/handle-method-register", MeController.handleMethodRegister);
 
 module.exports = router;

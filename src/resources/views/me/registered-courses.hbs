@@ -1,4 +1,4 @@
-<form class="m-4" name="container-form" method="POST" action="/courses/handle-method-course">
+<form class="m-4" name="container-form" method="POST" action="/me/handle-method-register">
     <div class="d-flex justify-content-between title-store">
       <h5>Khóa học đã đăng ký</h5>
     </div>
@@ -9,7 +9,7 @@
       </div>
       <select class="form-select mb-2 select-method-course" aria-label="Default select example" name="action" required>
           <option selected value="">-- Phương thức --</option>
-          <option value="softDelete">Hủy đăng ký</option>
+          <option value="unRegister">Hủy đăng ký</option>
       </select>
       <button type="submit" class="btn btn-primary btn-sumbit-method" disabled>Thực hiện</button>
       </div>
@@ -53,6 +53,7 @@
         </table>
       </div>
     </div>
+    <input type="text" name="userId" style="display: none;" value="{{userId}}">
 </form>
 
 <div id="delete-course-modal" class="modal" tabindex="-1">
@@ -100,42 +101,40 @@ if (exampleModal) {
           unRegisterForm.submit();   
       }
     })
-  /*
 
-  var checkboxAll = $("#checkbox-all")
-  var courseItemcheckbox = $("input[name='courseIds[]']")
-  var submitMethodBtn = $(".btn-sumbit-method")
-  var formContainer = document.forms["container-form"]
+    var checkboxAll = $("#checkbox-all")
+    var courseItemcheckbox = $("input[name='courseIds[]']")
+    var submitMethodBtn = $(".btn-sumbit-method")
+    var formContainer = document.forms["container-form"]
 
-  checkboxAll.change(function() {
-    var isChecked = $(this).prop('checked')
-    courseItemcheckbox.prop('checked', isChecked)
-    checkSelectedCourse()
-  })
+    checkboxAll.change(function() {
+      var isChecked = $(this).prop('checked')
+      courseItemcheckbox.prop('checked', isChecked)
+      checkSelectedCourse()
+    })
 
-  courseItemcheckbox.change(function() {
-    var isAllChecked = courseItemcheckbox.length === courseItemcheckbox.filter(':checked').length
-    checkboxAll.prop('checked', isAllChecked)
-    checkSelectedCourse()
-  })
+    courseItemcheckbox.change(function() {
+      var isAllChecked = courseItemcheckbox.length === courseItemcheckbox.filter(':checked').length
+      checkboxAll.prop('checked', isAllChecked)
+      checkSelectedCourse()
+    })
 
-  function checkSelectedCourse() {
-    var selectedCourseCount = $("input[name='courseIds[]']:checked").length
-    if (selectedCourseCount) {
-      submitMethodBtn.removeAttr("disabled")
-    } else {
-      submitMethodBtn.attr("disabled", "disabled")
+    function checkSelectedCourse() {
+      var selectedCourseCount = $("input[name='courseIds[]']:checked").length
+      if (selectedCourseCount) {
+        submitMethodBtn.removeAttr("disabled")
+      } else {
+        submitMethodBtn.attr("disabled", "disabled")
+      }
     }
-  }
-  
-  submitMethodBtn.on("submit", function(e) {
-    var isSubmitable = !$(this).hasClass("disabled")
+    
+    submitMethodBtn.on("submit", function(e) {
+      var isSubmitable = !$(this).hasClass("disabled")
 
-    if(!isSubmitable) {
-     e.preventDefault();
-    }
-  })
-  */
+      if(!isSubmitable) {
+      e.preventDefault();
+      }
+    })
 }
 
 </script>
