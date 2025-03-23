@@ -26,7 +26,8 @@
     </div>
   </form>
 
-    <h5 class="mt-4">Khoá học đã đăng ký</h5>
+{{#if (same "student" isStudent)}}
+      <h5 class="mt-4">Khoá học đã đăng ký</h5>
   {{#if registeredCourse}}
     <div class="row">
     {{#each registeredCourse}}
@@ -53,6 +54,7 @@
       <h6>Chưa đăng ký khoá học nào</h6>
     </div>
   {{/if}}
+{{/if}}
 
   <div class="row">
     {{#if (same "teacher" isStudent)}}

@@ -9,33 +9,48 @@ class SiteController {
 
   async index(req, res, next) {
     if (req.session.isLogin) {
-      let userRegisteredCourses, registeredCourseIds;
-      const registeredCourses = await RegisteredCourse.find({
-        userId: new mongoose.Types.ObjectId(req.session.userId)
-      });
-      if (registeredCourses) {
-        registeredCourseIds = registeredCourses.map(
-          (registeredCourse) => registeredCourse.courseId
-        );
-        const userRegisteredCoursesArr = await Course.find({
-          _id: { $in: registeredCourseIds }
-        });
-        userRegisteredCourses = userRegisteredCoursesArr;
-      } else {
-        userRegisteredCourses = [];
-      }
-      const nonRegisteredCourses = await Course.find({
-        _id: { $nin: registeredCourseIds }
-      });
+      if (req.session.role == "teacher") {
+        const createdCourses = await Course.find({
+          createdBy: req.session.userId,
+          isDeleted: false
+        }).then((createdCourses) => createdCourses);
 
-      res.render("index", {
-        courses: multipleMongooseToObject(nonRegisteredCourses),
-        registeredCourse: multipleMongooseToObject(userRegisteredCourses),
-        isSearch: req.session.isSearch,
-        fullName: req.session.fullName,
-        avatar: req.session.avatarUrl,
-        isStudent: req.session.role
-      });
+        res.render("index", {
+          courses: multipleMongooseToObject(createdCourses),
+          isSearch: req.session.isSearch,
+          fullName: req.session.fullName,
+          avatar: req.session.avatarUrl,
+          isStudent: req.session.role
+        });
+      } else {
+        let userRegisteredCourses, registeredCourseIds;
+        const registeredCourses = await RegisteredCourse.find({
+          userId: new mongoose.Types.ObjectId(req.session.userId)
+        });
+        if (registeredCourses) {
+          registeredCourseIds = registeredCourses.map(
+            (registeredCourse) => registeredCourse.courseId
+          );
+          const userRegisteredCoursesArr = await Course.find({
+            _id: { $in: registeredCourseIds }
+          });
+          userRegisteredCourses = userRegisteredCoursesArr;
+        } else {
+          userRegisteredCourses = [];
+        }
+        const nonRegisteredCourses = await Course.find({
+          _id: { $nin: registeredCourseIds }
+        });
+
+        res.render("index", {
+          courses: multipleMongooseToObject(nonRegisteredCourses),
+          registeredCourse: multipleMongooseToObject(userRegisteredCourses),
+          isSearch: req.session.isSearch,
+          fullName: req.session.fullName,
+          avatar: req.session.avatarUrl,
+          isStudent: req.session.role
+        });
+      }
     } else {
       res.redirect("/");
     }
